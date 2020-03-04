@@ -1,0 +1,110 @@
+export const type = [{
+    url:"ZSZY",
+    id:[{
+        name:"zsdk",
+        id:3,
+        type:"land"
+    }]
+},{
+    url:"JJTS",
+    id:[{
+        name:"zdxm",
+        id:1,
+        type:"point"
+    },{
+        name:"zdly",
+        id:2,
+        type:"point"
+    },{
+        name:"zysc",
+        id:3,
+        type:"point"
+    },{
+        name:"zsxm",
+        id:4,
+        type:"point"
+    }]
+},{
+    url:"CYBJ",
+    id:[{
+        name:"bdpt",
+        id:0,
+        type:"point"
+    },{
+        name:"hyd",
+        id:4,
+        type:"point"
+    }]
+},{
+    url:"MJLYX",
+    id:[{
+        name:"gypj",
+        id:0,
+        type:"point"
+    }]
+},{
+    url:"DKHX",
+    id:[{
+        name:"yzdc",
+        id:0,
+        type:"land"
+    },{
+        name:"kgdk",
+        id:1,
+        type:"land"
+    }]
+},{
+    url:"0",
+    id:[]
+}]
+export const JumpActive = [{
+    name:"zsdk",
+    route:"canvass",
+    id:"0",
+    activeName:"canvassResSummary"
+},{
+    name:"zdxm",
+    route:"canvass",
+    id:"1",
+    activeName:"ecoEstate"
+},{
+    name:"zysc",
+    route:"canvass",
+    id:"1",
+    activeName:"ecoEstate"
+},{
+    name:"zdly",
+    route:"canvass",
+    id:"1",
+    activeName:"ecoEstate"
+},{
+    name:"zsxm",
+    route:"canvass",
+    id:"0",
+    activeName:"canvassResSummary"
+},{
+    name:"hyd",
+    route:"economy",
+    id:"1",
+    activeName:"ecoCompany"
+},{
+    name:"bdpt",
+    route:"economy",
+    id:"1",
+    activeName:"ecoCompany"
+},{
+    name:"gypj",
+    route:"land",
+    id:"0",
+    activeName:"landHero"
+},{
+    name:"yzdc",
+    route:"land",
+    id:"0",
+    activeName:"landNone"
+},{
+    name:"kgdk",
+    route:"land",
+    id:"0",
+    activeName:"landNone"
+}]

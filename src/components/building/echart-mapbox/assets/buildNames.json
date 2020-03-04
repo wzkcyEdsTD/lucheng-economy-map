@@ -1,0 +1,304 @@
+{
+    "type": "FeatureCollection",
+    "features": [{
+            "type": "Feature",
+            "properties": {
+                "固定id": "58"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [120.66730057600012, 28.023787632000051]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "固定id": "57"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [120.72355043100004, 28.011522263000074]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "固定id": "32"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [120.68160917300008, 27.994243285000039]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "固定id": "38"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [120.68217519900008, 28.002485447000026]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "固定id": "52"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [120.69961733100001, 28.002616043000046]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "固定id": "1"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [120.68176675000007, 27.986349658000051]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "固定id": "2"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [120.70849671100007, 27.996170896000024]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "固定id": "3"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [120.6996545180001, 28.001706984000066]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "固定id": "4"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [120.69870631600008, 28.001782999000056]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "固定id": "5"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [120.66085351300001, 28.009206864000078]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "固定id": "6"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [120.67055549200006, 28.01547828300005]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "固定id": "7"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [120.64428277400009, 28.024450362000039]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "固定id": "8"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [120.65806803200007, 28.028049356000054]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "固定id": "9"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [120.69875683300006, 28.003011485000059]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "固定id": "11"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [120.66061133000005, 28.001309493000065]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "固定id": "13"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [120.64935832800006, 28.012310503000037]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "固定id": "14"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [120.62794070500001, 28.015826422000032]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "固定id": "15"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [120.62806476600008, 28.016845258000046]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "固定id": "16"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [120.72013898800003, 27.995575744000064]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "固定id": "17"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [120.71807510000008, 28.018805581000038]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "固定id": "18"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [120.72509863200003, 28.014372254000023]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "固定id": "19"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [120.66751233700006, 28.014489862000062]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "固定id": "20"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [120.66411279600004, 28.015968391000058]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "固定id": "21"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [120.66381267400004, 28.027741457000047]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "固定id": "22"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [120.69078641400006, 27.990765802000055]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "固定id": "23"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [120.69106024400003, 27.991976722000061]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "固定id": "24"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [120.69780862200003, 27.99536196300005]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "固定id": "25"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [120.67870648200005, 28.001882939000041]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "固定id": "26"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [120.69122350500004, 27.985896508000053]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "固定id": "27"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [120.65565495400006, 27.994621538000047]
+            }
+        }
+    ]
+}

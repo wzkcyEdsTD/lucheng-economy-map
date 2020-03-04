@@ -1,0 +1,74 @@
+.ecoChar {
+
+  .left,
+  .right {
+    height: 650px !important;
+
+    .leftCompetition {
+      background  : linear-gradient(180deg, rgba(0, 63, 189, 0.6) 0%, rgba(5, 53, 129, 0.6) 100%);
+      box-shadow  : 0px 4px 16px 0px rgba(0, 0, 0, 0.4), 0px 0px 44px 0px rgba(16, 146, 236, 0.3);
+      border-right: 1px solid;
+      border-image: linear-gradient(360deg,
+          rgba(7, 73, 190, 0) 0%,
+          rgba(0, 172, 255, 0.4) 32%,
+          rgba(0, 255, 255, 0.8) 51%,
+          rgba(0, 172, 255, 0.4) 73%,
+          rgba(7, 73, 190, 0) 100%) 1 10;
+    }
+
+  }
+
+  #charlunbo {
+    width     : 100%;
+    height    : 20%;
+    bottom    : 0;
+    padding   : 0px 10px !important;
+    background: linear-gradient(180deg, rgba(11, 17, 27, 0) 0%, rgba(11, 17, 27, 0.56) 100%);
+
+    #lunbo {
+      height          : 180px;
+      width           : 100%;
+      background-color: unset !important;
+      box-shadow      : unset !important;
+      background-image: unset;
+    }
+
+    .details {
+      height : 100%;
+      width  : 100%;
+      display: flex;
+
+      >img {
+        height: 100%;
+      }
+
+      >div:last-child {
+        flex      : 1;
+        box-sizing: border-box;
+        padding   : 10px;
+        position  : relative;
+
+        >p {
+          text-align: left;
+        }
+
+        >span {
+          position  : absolute;
+          bottom    : 0px;
+          display   : block;
+          text-align: left;
+          cursor    : pointer;
+          color     : aquamarine;
+        }
+      }
+    }
+  }
+
+  .extendMap {
+    width   : 300px;
+    height  : 200px;
+    position: absolute;
+    right   : 10%;
+    top     : 80px;
+  }
+}

@@ -1,0 +1,254 @@
+.iconfont {
+  width: 40px;
+  height: 40px;
+  line-height: 40px;
+  text-align: center;
+  box-sizing: border-box;
+  background: rgba(216, 216, 216, 0.2);
+  box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  margin-left: 10px;
+  cursor: pointer;
+}
+
+.stateTip::-webkit-scrollbar {
+  display: none;
+}
+
+.stateTip {
+  position: relative !important;
+  display: flex;
+  flex-direction: column;
+  width: 400px;
+  height: 100%;
+  float: left;
+  box-sizing: border-box;
+  padding: 10px;
+  background-color: rgba(37, 37, 37, 0.4);
+  background-image: url("../../common/image/repeatBg.png");
+  background-repeat: repeat;
+  overflow: auto;
+
+  .stateTipHeader {
+    height: 50px;
+    line-height: 40px;
+    font-size: 18px;
+    font-weight: 700;
+    text-align: left;
+
+    .stateTipHeaderBar:before {
+      content: "";
+      width: 4px;
+      height: 20px;
+      background: #15f9fd;
+      display: inline-block;
+      float: left;
+      margin-top: -4px;
+    }
+
+    .stateTipHeaderBar {
+      width: 120px;
+      height: 12px;
+      background: linear-gradient(90deg,
+          rgba(47, 253, 255, 0.5) 0%,
+          rgba(21, 249, 253, 0) 100%);
+      display: inline-block;
+    }
+
+    .stateBtn {
+      float: right;
+      display: inline-block;
+      cursor: pointer;
+      font-weight: 300;
+      font-size: 16px;
+      background: rgba(216, 216, 216, 0.2);
+      box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      padding: 0 10px;
+      margin-top: 8px;
+      height: 30px;
+      line-height: 30px;
+    }
+  }
+
+  >ul {
+    flex: 1;
+    box-sizing: border-box;
+    padding: 4px 0px;
+    overflow: hidden;
+
+    .more {
+      padding-left: 0px !important;
+      cursor: pointer;
+    }
+
+    .stateTopics:hover {
+      background-color: rgba(30, 30, 30, 0.5);
+    }
+
+    .stateTopics {
+      transition: all 0.4s;
+      display: block;
+      width: 100%;
+      height: 16.6%;
+      box-shadow: unset;
+      position: relative;
+      box-sizing: border-box;
+      padding: 6px 14px;
+
+      >div {
+        height: 100%;
+        box-sizing: border-box;
+        padding: 8px;
+
+        >div {
+          width: 20%;
+          height: 100%;
+          display: inline-block;
+          vertical-align: middle;
+          position: relative;
+        }
+
+        >div:first-child {
+          >img {
+            margin-top: 10px;
+            height: 50px;
+            border: 1px dashed #aaa;
+          }
+
+          >span {
+            height: 30px;
+            line-height: 30px;
+            display: block;
+          }
+        }
+
+        >div:nth-child(2) {
+          width: 60%;
+          border-right: 1px solid rgba(255, 255, 255, 0.33);
+          color: #9ed5f5;
+          font-size: 20px;
+          box-sizing: border-box;
+          padding: 0 20px;
+
+          .stateNumHeader {
+            margin: 10px 0 8px 0;
+          }
+
+          .stateNum {
+            display: block;
+            height: 38px;
+            background: linear-gradient(90deg,
+                rgba(63, 123, 206, 0.6) 0%,
+                rgba(63, 105, 190, 0.6) 100%);
+            border: 2px solid rgba(37, 159, 251, 0.5);
+            box-sizing: border-box;
+
+            >span {
+              display: inline-block;
+              width: 33.3%;
+              height: 100%;
+              vertical-align: middle;
+              line-height: 24px;
+              box-sizing: border-box;
+              padding: 4px 0;
+              border: 1px solid;
+              border-image: linear-gradient(180deg,
+                  rgba(65, 185, 255, 0),
+                  rgba(65, 185, 255, 0.5),
+                  rgba(65, 185, 255, 0)) 1 1;
+            }
+          }
+        }
+
+        >div:last-child {
+          input {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-9px, -9px);
+          }
+        }
+      }
+    }
+  }
+
+  .stateInput {
+    height: 40px;
+    display: flex;
+    box-shadow: unset;
+    background-color: unset;
+
+    .stateTitle {
+      width: 100%;
+      height: 40px;
+      line-height: 40px;
+      background: rgba(216, 216, 216, 0.2);
+      -webkit-box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.1);
+      box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+  }
+
+  #stateLeftPanel {
+    flex: 1;
+    background-color: unset;
+    box-shadow: unset;
+    display: flex;
+    flex-direction: column;
+
+    .rightRadioFrame_list {
+      margin: 10px 0;
+      padding: 0px;
+
+      li {
+        span:first-child {
+          width: 50px;
+        }
+
+        span:last-child i:first-child {
+          background: rgba(32, 193, 255, 1);
+          opacity: 0.8;
+        }
+
+        span:last-child i:last-child {
+          margin-left: 10px;
+        }
+      }
+    }
+
+    .ecoEstate_tableFrame {
+      flex: 1;
+    }
+  }
+}
+
+.rightSearch {
+  display: flex;
+  flex-direction: column;
+  width: 400px;
+  height: 800px;
+  padding: 0px 10px;
+  right: 0px;
+  top: 192px;
+  // z-index: 3;
+
+  .RstateInput {
+    height: 60px;
+    display: flex;
+    box-shadow: unset;
+    background-color: unset;
+
+    input {
+      outline: none;
+      color: #fff;
+      height: 40px;
+      background: rgba(216, 216, 216, 0.2);
+      box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      flex: 1;
+      box-sizing: border-box;
+      padding: 0 0 0 10px;
+    }
+  }
+}

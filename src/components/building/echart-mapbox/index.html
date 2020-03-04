@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Building</title>
+
+    <script src="./src/js/jquery-3.4.1.min.js"></script>
+
+    <script src="./src/js/echarts.min.js"></script>
+    <script src="./src/js/echarts-gl.js"></script>
+
+    <script src="./src/js/mapbox-gl.js"></script>
+    <link rel="stylesheet" href="./src/css/mapbox-gl.css">
+
+    <script src="./src/js/three.min.js"></script>
+    <script src="./src/js/GLTFLoader.js"></script>
+
+    <script src="./js/mapInit.js"></script>
+
+    <!-- <script src="./assets/Line.js"></script> -->
+
+
+    <script src="./assets/lcLine.js"></script>
+
+    <script src="./assets/buildNames.js"></script>
+
+    <script src="./assets/sm500poi.js"></script>
+
+    <style>
+        body,
+        html {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+        }
+
+        #main {
+            width: 100%;
+            height: 100%;
+        }
+
+        #fly {
+            position: absolute;
+            top: 0px;
+            left: 25%;
+            width: 50%;
+            height: 40px;
+            padding: 10px;
+            border: none;
+            border-radius: 3px;
+            font-size: 18px;
+            line-height: 18px;
+            text-align: center;
+            color: #fff;
+            background: #ee8a65;
+            cursor: pointer;
+        }
+
+
+        #change {
+            position: absolute;
+            top: 0px;
+            left: 3%;
+            width: 20%;
+            height: 40px;
+            padding: 10px;
+            border: none;
+            border-radius: 3px;
+            font-size: 18px;
+            line-height: 18px;
+            text-align: center;
+            color: #fff;
+            background: #ee8a65;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <div id='main'></div>
+    <button id="change">精模/粗模</button>
+    <button id='fly'>Fly</button>
+</body>
+
+</html>

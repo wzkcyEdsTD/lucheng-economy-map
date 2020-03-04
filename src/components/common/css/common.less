@@ -1,0 +1,847 @@
+/* common css */
+@backgroundColor: linear-gradient(180deg, rgba(23, 45, 94, 1) 0%, rgba(2, 15, 36, 1) 100%);
+;
+
+* {
+  padding: 0;
+  margin : 0;
+}
+
+html,
+body {
+  height   : 100%;
+  overflow : hidden;
+  font-size: 16px;
+}
+
+li {
+  list-style: none;
+}
+
+.app {
+  font-family            : "Avenir", Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing : antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-align             : center;
+  color                  : #fff;
+  height                 : 100%;
+  background             : @backgroundColor;
+  display                : flex;
+  flex-direction         : column;
+  overflow               : hidden;
+
+  #cover {
+    height    : 100%;
+    width     : 100%;
+    transition: all 1s;
+    position  : fixed;
+    z-index   : 10;
+
+    #lottie_pass {
+      height          : 40px;
+      line-height     : 40px;
+      width           : 100px;
+      border-radius   : 8px;
+      background-color: rgba(0, 0, 0, 0.5);
+      color           : #fff;
+      font-size       : 20px;
+      font-weight     : bold;
+      position        : fixed;
+      top             : 40px;
+      right           : 40px;
+      z-index         : 10;
+      text-align      : center;
+      cursor          : pointer;
+    }
+
+    #lottie_video {
+      width     : 100%;
+      height    : 100%;
+      object-fit: fill;
+    }
+
+
+  }
+
+  .noShow {
+    opacity: 0;
+  }
+
+  // 头部样式
+  .app_header {
+    height            : 80px;
+    -webkit-box-sizing: border-box;
+    box-sizing        : border-box;
+    padding           : 0 0 10px;
+    position          : absolute;
+    width             : 100%;
+    z-index           : 2;
+
+    .app_icon,
+    .app_toptab {
+      display: inline-block;
+    }
+
+    .app_toptab_outside {
+      // background-image: url("../image/bg_outside.png");
+      background-size    : 100% 100%;
+    }
+
+    .app_toptab_normal {
+      background-image: url("../image/headDefault1.png");
+      background-size : 100% 100%;
+    }
+
+    .app_toptab_position {
+      width  : 100%;
+      height : 120px;
+      padding: 9px 0 0;
+
+      >div {
+        height: 100%;
+      }
+
+      .line {
+        position         : relative;
+        top              : 11px;
+        height           : 2px;
+        width            : 500px;
+        margin           : auto;
+        // background    : linear-gradient(-90deg, rgba(21, 249, 253, 0) 10%, rgb(255, 255, 255) 50%, rgba(21, 249, 253, 0) 90%);
+        background-repeat: no-repeat;
+        background-size  : 100% 100%;
+
+        .circle {
+          position     : absolute;
+          margin-left  : 7px;
+          top          : -4px;
+          transition   : all 0.8s;
+          width        : 10px;
+          height       : 10px;
+          background   : linear-gradient(180deg, rgba(144, 255, 234, 1) 0%, rgba(80, 227, 194, 1) 100%);
+          border-radius: 50%;
+        }
+
+        .spot {
+          position                         : absolute;
+          top                              : -10px;
+          transition                       : all 0.8s;
+          width                            : 24px;
+          height                           : 24px;
+          animation                        : spotChange 2s ease;
+          -webkit-animation-iteration-count: infinite;
+          -moz-animation-iteration-count   : infinite;
+          animation-iteration-count        : infinite;
+
+          div {
+            position     : absolute;
+            width        : 8px;
+            height       : 8px;
+            border-width : 1.5px;
+            border-color : #F5931F;
+            border-radius: 25%;
+          }
+
+          .top-left {
+            border-style: none solid solid none;
+            left        : 0;
+          }
+
+          .top-right {
+            border-style: none none solid solid;
+            right       : 0;
+          }
+
+          .bottom-left {
+            border-style: solid solid none none;
+            left        : 0;
+            bottom      : 0;
+          }
+
+          .bottom-right {
+            border-style: solid none none solid;
+            right       : 0;
+            bottom      : 0;
+          }
+        }
+
+        .lightspot {
+          position                         : absolute;
+          top                              : -22px;
+          left                             : 50px;
+          transition                       : all 0.8s;
+          animation                        : spotMove 6s linear;
+          -webkit-animation-iteration-count: infinite;
+          -moz-animation-iteration-count   : infinite;
+          animation-iteration-count        : infinite;
+        }
+      }
+
+      .app_toptab {
+        list-style: none;
+        position  : relative;
+
+        li {
+          line-height: 40px;
+          display    : inline-block;
+          text-align : center;
+          font-size  : 28px;
+          color      : #FFC649;
+          text-shadow: 0px 2px 0px rgba(114, 66, 4, 0.6);
+          cursor     : pointer;
+
+          a {
+            text-decoration: none;
+          }
+        }
+
+        li:after {
+          content         : "";
+          display         : inline-block;
+          background-image: url("../image/bgP.png");
+          height          : 24px;
+          width           : 24px;
+          margin          : 0 10px;
+        }
+
+        li:last-child:after {
+          visibility : hidden;
+          width      : 0;
+          margin-left: 0;
+        }
+      }
+
+
+      .app_toptab:before,
+      .app_toptab:after {
+        content          : "";
+        display          : inline-block;
+        height           : 12px;
+        width            : 150px;
+        position         : relative;
+        top              : -4px;
+        background-repeat: no-repeat;
+        background-size  : 100% 100%;
+      }
+
+      .app_toptab:before {
+        background-image: url("../image/line2.png");
+        margin-right    : 30px;
+      }
+
+      .app_toptab:after {
+        background-image: url("../image/line.png");
+        margin-left     : 30px;
+      }
+    }
+
+    .app_icon {
+      position: fixed;
+      left    : 16px;
+      top     : 6px;
+
+      i {
+        vertical-align: top;
+        line-height   : 40px;
+        display       : inline-block;
+        font-size     : 24px;
+        font-style    : normal;
+      }
+
+      img {
+        height: 80%;
+      }
+    }
+
+    .app_icon2 {
+      position: fixed;
+      right   : 25px;
+      top     : 19px;
+      display : flex;
+
+      img {
+        height: 24px;
+        width : 150px;
+      }
+
+      .chooseButton {
+        cursor     : pointer;
+        width      : 23px;
+        height     : 24px;
+        line-height: 28px;
+        margin-left: 20px;
+
+        img {
+          width : 100%;
+          height: 100%;
+        }
+      }
+    }
+  }
+
+  .noWidth {
+    width: unset;
+  }
+
+  /*  主要内容  */
+  .app_container {
+    flex      : 1;
+    box-sizing: border-box;
+    overflow  : hidden;
+
+    .lucheng {
+      position      : relative;
+      height        : 100%;
+      display       : flex;
+      flex-direction: column;
+      overflow      : hidden;
+
+      >header {
+        height     : 25px;
+        position   : absolute;
+        // overflow: hidden;
+        width      : 100%;
+        top        : 72px;
+        z-index    : 2;
+
+        ul {
+          list-style: none;
+
+          li {
+            height           : 30px;
+            line-height      : 30px;
+            display          : inline-block;
+            width            : 92px;
+            text-align       : center;
+            font-size        : 16px;
+            color            : #C7DEFF;
+            position         : relative;
+            cursor           : pointer;
+            background-image : url("../image/headButton.png");
+            background-repeat: no-repeat;
+            background-size  : 100% 100%;
+            margin-right     : 34px;
+            // text-shadow   : 0.2rem 0rem 0.5rem #58a6e2, -0.2rem 0rem 0.5rem #58a6e2,
+            //   0rem 0.2rem 0.5rem #58a6e2, 0rem -0.2rem 0.5rem #58a6e2;
+          }
+
+          // .li_tab_active:after {
+          //   content          : "";
+          //   position         : absolute;
+          //   width            : 100px;
+          //   bottom           : 0px;
+          //   left             : 0px;
+          //   width            : 100px;
+          //   height           : 5px;
+          //   display          : block;
+          //   background-image : url("../image/子标题下划线.png");
+          //   background-size  : 100% 100%;
+          //   background-repeat: no-repeat;
+          //   transition       : all 0.8s;
+          // }
+        }
+      }
+
+      .page_container {
+        flex      : 1;
+        overflow  : hidden;
+        box-sizing: border-box;
+
+        >div {
+          height     : 100%;
+          position   : relative;
+          box-sizing : border-box;
+          padding-top: 108px;
+
+          .Com_map {
+            height  : 100%;
+            width   : 100%;
+            position: absolute;
+            top     : 0;
+          }
+
+          .Com_container {
+            .topLeft {
+              margin-top: unset !important;
+              top       : 108px !important
+            }
+
+            .left,
+            .right {
+              box-sizing    : border-box;
+              // padding-top: 80px;
+              margin-top    : 108px;
+            }
+
+            .com_left,
+            .com_right {
+              box-sizing : border-box;
+              padding-top: 60px;
+            }
+          }
+        }
+
+        /*  所有页面内通用样式放这里  */
+        .no_show {
+          display: none !important;
+        }
+
+        .middle_chart {
+          width : 100%;
+          height: 100%;
+        }
+
+        #Est_moving {
+          position : fixed;
+          bottom   : 15px;
+          width    : 800px;
+          left     : 50%;
+          transform: translate(-400px, 0);
+        }
+
+        .blueBorder {
+          p {
+            width           : 24px;
+            height          : 24px;
+            position        : absolute;
+            top             : 0px;
+            background-image: url("../image/blueBorder.png");
+          }
+
+          p:first-child {
+            left: 0;
+          }
+
+          p:nth-child(2) {
+            right    : 0;
+            transform: rotateY(180deg);
+          }
+
+          p:nth-child(3) {
+            top      : unset;
+            bottom   : 0;
+            left     : 0;
+            transform: rotateX(180deg);
+          }
+
+          p:last-child {
+            top      : unset;
+            bottom   : 0;
+            right    : 0;
+            transform: rotate(180deg);
+          }
+        }
+      }
+
+      .no_select {
+        -moz-user-select: none;
+        /* Firefox私有属性 */
+        -webkit-user-select: none;
+        /* WebKit内核私有属性 */
+        -ms-user-select: none;
+        /* IE私有属性(IE10及以后) */
+        -khtml-user-select: none;
+        /* KHTML内核私有属性 */
+        -o-user-select: none;
+        /* Opera私有属性 */
+        user-select: none;
+        /* CSS3属性 */
+      }
+    }
+  }
+}
+
+// .esri-ui-inner-container.esri-ui-corner-container,
+// .esri-ui-inner-container {
+//   display: none;
+// }
+.esri-ui {
+  .esri-widget {
+    background-color: unset;
+  }
+
+  //  图例框宽度
+  .esri-ui-corner .esri-expand .esri-widget--panel,
+  .esri-ui-corner .esri-expand .esri-widget--panel-height-only,
+  .esri-ui-corner .esri-component.esri-widget--panel {
+    width: unset !important;
+  }
+
+  // .esri-ui-bottom-left {
+  //   left: 350px;
+  // }
+
+  .esri-ui-bottom-right,
+  .esri-ui-bottom-left {
+    right     : 410px;
+    transition: all 1s;
+
+    .esri-legend__service {
+      padding: 10px;
+    }
+
+    .esri-legend__service-label {
+      display: none;
+    }
+
+    .esri-legend {
+      overflow        : hidden;
+      overflow-y      : auto;
+      color           : #fff;
+      background-color: rgba(0, 0, 0, 0.5);
+      border-radius   : 4px;
+      max-height      : 340px !important;
+    }
+
+    .esri-legend::-webkit-scrollbar {
+      display         : block;
+      width           : 6px;
+      background-color: rgb(146, 146, 146);
+      border-radius   : 3px;
+    }
+
+    .esri-legend::-webkit-scrollbar-thumb {
+      width           : 6px;
+      background-color: rgb(68, 68, 68);
+      border-radius   : 3px;
+    }
+
+    .esri-widget__heading {
+      color: unset;
+    }
+  }
+
+  //  图例服务图层名称
+  .esri-legend__layer-caption {
+    display: none;
+  }
+
+  //  图例服务图层margin-bottom样式
+  .esri-legend__layer-table {
+    margin-bottom: 0px;
+  }
+
+  //  左上放大缩小
+  .esri-ui-top-left {
+    display: none;
+  }
+
+  //  powerd
+  .esri-attribution {
+    display: none;
+  }
+
+  //  popup
+  .esri-popup {
+    // background-color: rgba(255, 255, 255, 1);
+    color              : #000;
+    z-index            : 10;
+
+    .esri-popup__main-container {
+      // overflow              : hidden;
+      // background-color      : rgba(25, 43, 78, 0.83);
+      // box-shadow            : 0px 10px 25px #305cbc inset;
+      // color                 : #fff;
+      width                    : 440px;
+      box-sizing               : border-box;
+      padding                  : 10px;
+      background-image         : url("../image/PopBg.png");
+      background-repeat        : no-repeat;
+      background-size          : 100% 100%;
+      // background            : linear-gradient(90deg, rgba(27, 56, 101, 0.8) 0%, rgba(27, 56, 101, 0.8) 100%);
+      // box-shadow            : 0px 4px 16px 0px rgba(0, 0, 0, 0.4);
+      overflow                 : hidden;
+      background-repeat        : repeat;
+      color                    : #2AFFFA;
+    }
+
+    .esri-popup__header-container--button {
+      outline: none;
+    }
+
+    .esri-popup__header-title:hover {
+      background-color: rgba(25, 43, 78, 0.8);
+      font-size       : 18px;
+    }
+
+    .esri-popup__content::-webkit-scrollbar {
+      display: none;
+    }
+
+    .esri-popup__footer {
+      display: none;
+    }
+
+    .esri-popup__button--dock {
+      display: none;
+    }
+
+    .esri-popup__pointer-direction {
+      // background-color: rgba(25, 43, 78, 1);
+      // box-shadow      : 0px 10px 25px #305cbc inset;
+      background-color   : rgba(37, 37, 37);
+    }
+
+    .esri-popup__button {
+      color: #fff;
+    }
+
+
+    .esri-popup__button:hover {
+      background-color: rgba(25, 43, 78, 0.8);
+    }
+
+    .esri-popup__header-title {
+      text-align: center;
+      font-size : 19px;
+
+    }
+
+    .poptemplate_frame {
+      width: 100%;
+
+      >div {
+        width      : 100%;
+        text-align : left;
+        font-size  : 16px;
+        line-height: 22px;
+
+        >img {
+          width     : 100%;
+          max-height: 200px;
+        }
+      }
+
+      .poptemplate_title {
+        font-size: 19px;
+        color    : #13E3FF;
+        height   : 52px;
+      }
+
+      .poptemplate_frame_img {
+        >img {
+          width        : 180px;
+          float        : left;
+          margin-right : 10px;
+          margin-bottom: 5px;
+        }
+      }
+
+      ul {
+        width         : 100%;
+        height        : 100%;
+        list-style    : none;
+        display       : flex;
+        flex-direction: column;
+
+        li {
+          flex       : 1;
+          color      : #fff;
+          font-size  : 17px;
+          line-height: 27px;
+
+          span {
+            color       : #2AFFFA;
+            margin-right: 5px;
+          }
+        }
+      }
+    }
+  }
+}
+
+/*  进度条  */
+.percent_frame {
+  position        : relative;
+  border-radius   : 4px;
+  background-color: #5f5f5f;
+  border          : 1px solid #333;
+
+  .p_low {
+    background-color: #cf4647;
+    background-image: repeating-linear-gradient(-45deg, #cf4647, #cf4647 30px, #da6e6f 30px, #da6e6f 60px);
+    border-bottom   : 0.2rem solid #9f292a;
+  }
+
+  .p_middle {
+    background-color: #d1f72f;
+    background-image: repeating-linear-gradient(-45deg, #efd247, #ccc44b 30px, #a29554 30px, #9dab2a 60px);
+    border-bottom   : 0.2rem solid #7b9629;
+  }
+
+  .p_high {
+    background-color: #14c3a2;
+    background-image: repeating-linear-gradient(-45deg, #14c3a2, #14c3a2 30px, #22e8c3 30px, #22e8c3 60px);
+    border-bottom   : 0.2rem solid #0d7e68;
+  }
+
+  .percent {
+    height         : 24px;
+    width          : 0;
+    transition     : width 1.2s ease-in-out;
+    border-radius  : 4px;
+    background-size: 600px 100%;
+    animation      : barberpole 20s linear infinite;
+  }
+
+  .percent:after {
+    opacity    : 1;
+    content    : attr(data-percent) "%";
+    display    : block;
+    position   : absolute;
+    top        : 0;
+    right      : 4px;
+    height     : 24px;
+    line-height: 24px;
+    font-weight: 700;
+  }
+
+  @keyframes barberpole {
+    from {
+      background-position: 0% 0%;
+    }
+
+    to {
+      background-position: 600px 0%;
+    }
+  }
+}
+
+.active {
+  color      : rgba(255, 250, 231, 1) !important;
+  text-shadow: 0px 0px 2px rgba(245, 147, 31, 0.5) !important;
+  font-weight: bolder;
+}
+
+/*  transition属性  */
+.fade-in-active {
+  transition: all 0.5s ease;
+}
+
+.fade-in-enter {
+  opacity: 0;
+}
+
+.frame-enter-active,
+.frame-leave-active {
+  transition: opacity 0.5s;
+}
+
+.frame-enter,
+.frame-leave-active {
+  opacity: 0;
+}
+
+/*  input   */
+input[type="checkbox"] {
+  -webkit-appearance: none;
+  -moz-appearance   : none;
+  appearance        : none;
+  /*编辑我们自己的样式*/
+  position     : relative;
+  width        : 18px;
+  height       : 18px;
+  // transform : translate(-9px, -8px);
+  background   : rgba(21, 249, 253, 0.66);
+  border       : 1px solid rgba(255, 255, 255, 0.2);
+  border       : 0px;
+  outline      : none;
+  cursor       : pointer;
+  top          : 2px;
+}
+
+input[type="checkbox"]:after {
+  content    : "√";
+  position   : absolute;
+  display    : block;
+  width      : 100%;
+  height     : 100%;
+  color      : #fff;
+  text-align : center;
+  line-height: 24px;
+  /*增加动画*/
+  -webkit-transition: all ease-in-out 300ms;
+  -moz-transition   : all ease-in-out 300ms;
+  transition        : all ease-in-out 300ms;
+  /*利用border-radius和opacity达到填充的假象，首先隐藏此元素*/
+  -webkit-border-radius: 20px;
+  -moz-border-radius   : 20px;
+  border-radius        : 20px;
+  opacity              : 0;
+}
+
+input[type="checkbox"]:checked:after {
+  -webkit-border-radius: 0;
+  -moz-border-radius   : 0;
+  border-radius        : 0;
+  opacity              : 1;
+}
+
+/*  line    */
+._line {
+  background: rgba(255, 255, 255, 0.5);
+  display   : block;
+  height    : 1px;
+  width     : 100%;
+}
+
+._line:before {
+  content    : "·";
+  float      : left;
+  display    : inline;
+  height     : 2px;
+  width      : 2px;
+  margin-left: -10px;
+  margin-top : -8px;
+}
+
+._line:after {
+  content     : "·";
+  float       : right;
+  display     : inline;
+  height      : 2px;
+  width       : 2px;
+  margin-right: -10px;
+  margin-top  : -8px;
+}
+
+/*  color   */
+.igreen,
+.igreen:before {
+  color: rgb(71, 210, 0);
+}
+
+.igold,
+.igold:before {
+  color: rgb(255, 240, 13);
+}
+
+.ipurple,
+.ipurple:before {
+  color: rgb(175, 14, 240);
+}
+
+.ibule,
+.ibule:before {
+  color: rgb(16, 181, 255);
+}
+
+.ideepbule,
+.ideepbule:before {
+  color: rgb(18, 64, 255);
+}
+
+.iorange,
+.iorange:before {
+  color: rgb(255, 165, 0);
+}
+
+.i_blue {
+  font-style: normal;
+  color     : #00FFFF;
+}
+
+.i_gold {
+  font-style: normal;
+  color     : #FFCC60;
+}
