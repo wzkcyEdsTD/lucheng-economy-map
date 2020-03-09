@@ -4,7 +4,7 @@
 ## 技术栈
 _vue + axios + echarts + arcgisjs + mapboxjs_
 
-## 系统
+## 系统截图
 ![lucheng-economy-map](https://github.com/EdisonForMan/lucheng-economy-map/blob/master/doc/img/home.png)
 ![lucheng-economy-map](https://github.com/EdisonForMan/lucheng-economy-map/blob/master/doc/img/build1.png)
 ![lucheng-economy-map](https://github.com/EdisonForMan/lucheng-economy-map/blob/master/doc/img/build2.png)
