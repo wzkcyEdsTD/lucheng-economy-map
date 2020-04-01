@@ -3,8 +3,14 @@
     <header class="stateTipHeader">
       {{forceChar.name}}
       <!-- <span class="stateTipHeaderBar"></span> -->
+      <span v-if="forceChar.name=='南汇街道' && panelType==0" class="stateTipBtn" @click="charDetail">详情</span>
+      <span
+        v-if="forceChar.name=='南汇街道' && panelType==1"
+        class="stateTipBtn"
+        @click="()=>{ panelType = 0 }"
+      >返回</span>
     </header>
-    <div class="intro">
+    <div v-if="panelType==0" class="intro">
       <div>
         <img :src="forceChar.url" @click="clickImg(forceChar.url)" />
       </div>
@@ -25,6 +31,12 @@
       <header>限上消费品零售总额(亿元)</header>
       <ecoecharts id="Chart2" :option="xsxfpOption"></ecoecharts>
     </div>-->
+    <leftMultiSelect
+      ref="leftMultiSelect"
+      v-if="panelType==1"
+      :leftOptions="leftOptions"
+      :imgUrl="imgUrl"
+    />
     <div class="blueBorder">
       <p></p>
       <p></p>
@@ -35,7 +47,9 @@
 </template>
 
 <script>
+/* eslint-disable */
 // import ecoecharts from "@/components/common/echarts";
+import leftMultiSelect from "@/components/common/selectRadioFrame/leftMultiSelect";
 import { ChartOption, Chart1Option, Chart2Option } from "./chartsOption";
 export default {
   name: "leftCompetition",
@@ -43,10 +57,13 @@ export default {
     return {
       gsgyOption: ChartOption,
       xsplzcOption: Chart1Option,
-      xsxfpOption: Chart2Option
+      xsxfpOption: Chart2Option,
+      imgUrl: "topicsIcon",
+      panelType: 0,
+      leftOptions: []
     };
   },
-  components: {},
+  components: { leftMultiSelect },
   props: { forceChar: Object },
   watch: {
     forceChar: {
@@ -69,9 +86,99 @@ export default {
   },
   mounted() {},
   methods: {
-    clickImg(e){
+    clickImg(e) {
       this.$parent.ImgUrl = e;
       this.$parent.showImg = true;
+    },
+
+    /**
+     * 2020.4.1
+     * 南汇街道详情
+     */
+    charDetail() {
+      // 暂停轮播
+      this.$parent.$refs.lunbo.pause();
+      // 定位放大
+      this.$parent.$refs.ecoCharArcgis.view.goTo({
+        center: [120.6903116838896, 27.991332968822448],
+        zoom: 15
+      });
+
+      // 面板切换
+      this.panelType = 1;
+
+      // 添加列表
+      this.leftOptions = [
+        {
+          label: "特色经济",
+          check: true,
+          show: true,
+          children: [
+            {
+              name: "重大产业项目",
+              id: "featureProject",
+              fun: "addFeatureProject",
+              check: true,
+              img: true,
+              num: 2,
+              imgName: "重点项目"
+            },
+            {
+              name: "优质楼宇",
+              id: "build",
+              fun: "addBuild",
+              check: true,
+              img: true,
+              num: 18,
+              imgName: "优质楼宇"
+            },
+            {
+              name: "招商项目",
+              id: "land",
+              fun: "addLand",
+              check: true,
+              img: true,
+              num: 2,
+              imgName: "招商项目"
+            }
+          ]
+        },
+        {
+          label: "鹿城全景",
+          check: true,
+          show: true,
+          children: [
+            {
+              name: "南汇街道全景",
+              id: "lcqj",
+              fun: "addQJDT",
+              check: true
+            }
+          ]
+        }
+      ];
+      this.$parent.leftOptions = this.leftOptions;
+    },
+    /**
+     * 左模块checkbox双向绑定更新后触发
+     * 将左边勾选或取消的tab对右边tab集做更新
+     */
+    changeLeftOption(options) {
+      this.$parent.leftOptions = options;
+      const arr = [];
+      options.map(v => {
+        v.children.map(item => {
+          item.check ? arr.push(item.name) : null;
+        });
+      });
+      // this.forceOptions = ["全部", ...arr];
+      // if (!~arr.indexOf(this.forceOne.label)) {
+      //   this.forceTheFirstOne();
+      // }
+    },
+    //  图层工具状态改变
+    changeMapTool(_mapTool) {
+      this.$parent.mapTool = _mapTool;
     }
   }
 };
@@ -94,15 +201,24 @@ export default {
   .stateTipHeader {
     height: 50px;
     line-height: 40px;
-    // font-size: 18px;
-    // font-weight: 700;
     text-align: left;
-    // color: #2afffa;
     font-size: 20px;
     font-weight: 700;
-    color: #4CD7EC;
-    text-shadow:0px 0px 4px rgba(76,215,236,0.3);
+    color: #4cd7ec;
+    text-shadow: 0px 0px 4px rgba(76, 215, 236, 0.3);
     padding-left: 20px;
+
+    .stateTipBtn {
+      float: right;
+      margin-right: 10px;
+      border: 1px solid;
+      line-height: 35px;
+      padding: 0 12px;
+      border-radius: 8px;
+      background: #233c6c;
+      font-size: 16px;
+      cursor: pointer;
+    }
 
     .stateTipHeaderBar:before {
       content: "";
@@ -110,7 +226,6 @@ export default {
       height: 20px;
       background: #15f9fd;
       display: inline-block;
-      float: left;
       margin-top: -4px;
     }
     .stateTipHeaderBar {

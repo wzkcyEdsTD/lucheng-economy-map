@@ -88,10 +88,80 @@ export default {
       }, 8000);
     },
     clickHandle(item, _index) {
+      /* this.$parent.switchChar(item);
+      this.index = _index + 1; */
+
+      /**
+       * 2020/4/1
+       * 修改
+       */
+
       this.$parent.switchChar(item);
+      clearInterval(this.interval);
       this.index = _index + 1;
+      this.initInterval();
+      this.playFlag = true;
+
+      this.$parent.$refs.leftCompetition.panelType = 0;
+      this.$parent.$refs.ecoCharArcgis.indexShow = false;
+      this.$parent.icon_show_left = true;
+      this.$parent.$refs.ecoCharArcgis.doFun({
+        id: "featureProject",
+        fun: "addFeatureProject",
+        check: false
+      });
+      this.$parent.$refs.ecoCharArcgis.doFun({
+        id: "build",
+        fun: "addBuild",
+        check: false
+      });
+      this.$parent.$refs.ecoCharArcgis.doFun({
+        id: "land",
+        fun: "addLand",
+        check: false
+      });
+      this.$parent.$refs.ecoCharArcgis.doFun({
+        id: "lcqj",
+        fun: "addQJDT",
+        check: false
+      });
     },
+
+    // 暂停
+    pause() {
+      clearInterval(this.interval);
+      this.playFlag = false;
+    },
+
     play() {
+      /**
+       * 2020.4.1
+       * 隐藏图层
+       */
+      this.$parent.$refs.leftCompetition.panelType = 0;
+      this.$parent.$refs.ecoCharArcgis.indexShow = false;
+      this.$parent.icon_show_left = true;
+      this.$parent.$refs.ecoCharArcgis.doFun({
+        id: "featureProject",
+        fun: "addFeatureProject",
+        check: false
+      });
+      this.$parent.$refs.ecoCharArcgis.doFun({
+        id: "build",
+        fun: "addBuild",
+        check: false
+      });
+      this.$parent.$refs.ecoCharArcgis.doFun({
+        id: "land",
+        fun: "addLand",
+        check: false
+      });
+      this.$parent.$refs.ecoCharArcgis.doFun({
+        id: "lcqj",
+        fun: "addQJDT",
+        check: false
+      });
+
       // 播放/暂停
       if (this.playFlag) {
         clearInterval(this.interval);
