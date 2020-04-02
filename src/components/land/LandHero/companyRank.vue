@@ -88,15 +88,7 @@ export default {
       this.searchLandCompany(this.btnSearch);
     },
     changeColor(dc) {
-      if (dc == "A") {
-        return "A";
-      } else if (dc == "B") {
-        return "B";
-      } else if (dc == "C") {
-        return "C";
-      } else {
-        return "D";
-      }
+      return dc || 'D';
     }
   }
 };
