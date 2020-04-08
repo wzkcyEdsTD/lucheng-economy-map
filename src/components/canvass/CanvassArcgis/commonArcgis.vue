@@ -452,11 +452,11 @@ export default {
     },
     addPop(item, _mapPoint) {
       const that = this;
-      const obj = item.attributes;
+      const obj = item.attributes || item;
       return new Promise((resolve, reject) => {
         loadModules(["esri/geometry/Point"], OPTION).then(async ([Point]) => {
           that.view.popup.visible = false;
-          const mapPoint = item.geometry.x
+          const mapPoint = item.geometry && item.geometry.x
             ? new Point({
                 x: item.geometry.x,
                 y: item.geometry.y
@@ -478,7 +478,7 @@ export default {
             </div>`,
             location: mapPoint
           };
-          that.clickName = item.attributes;
+          that.clickName = item.attributes || obj;
           that.view.popup.visible = true;
           resolve(true);
         });
@@ -952,8 +952,9 @@ export default {
         const y = obj.y || obj.attributes.POINT_Y;
         const mapPoint = new Point(x, y);
         that.view.goTo(mapPoint);
-        // that.addPop(mapPoint, obj);
-        that.fetchAreaByClick(mapPoint, obj);
+        console.log(obj)
+        obj && that.addPop(obj, mapPoint);
+        // that.fetchAreaByClick(mapPoint, obj);
         // that.showCanvass = true;
       });
     },
