@@ -15,7 +15,7 @@ async function ds(_option = {}) {
         {
           alias: "a",
           orm: "name",
-          name: "(select b.* ,c.gzzz,c.xm,c.lxfs from u_lyxx as b left join (select * from u_lylxr where gzzz = '招商员') as c  on b.gdid = c.gdid )"
+          name: "(select b.*,c.xm,c.gzzz from u_lyxx as b left join (select distinct xm,gzzz,gdid from u_lylxr where gzzz = '招商员') as c on b.gdid = c.gdid )"
         }
       ],
       cols: [
@@ -34,7 +34,7 @@ async function ds(_option = {}) {
         { name: "gdid", raw: "a.gdid" },
         { name: "address", raw: "a.address" },
         { name: "xm", raw: "a.xm" },
-        { name: "lxfs", raw: "a.lxfs" }
+        // { name: "lxfs", raw: "a.lxfs" }
       ],
       module: "testsql_all",
       where: "",
