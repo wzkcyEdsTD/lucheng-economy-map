@@ -84,7 +84,7 @@ li {
 
     .app_toptab_outside {
       // background-image: url("../image/bg_outside.png");
-      background-size    : 100% 100%;
+      background-size: 100% 100%;
     }
 
     .app_toptab_normal {
@@ -239,6 +239,8 @@ li {
       position: fixed;
       left    : 16px;
       top     : 6px;
+      width   : 360px;
+      height  : 64px;
 
       i {
         vertical-align: top;
@@ -258,6 +260,8 @@ li {
       right   : 25px;
       top     : 19px;
       display : flex;
+      width   : 193px;
+      height  : 24px;
 
       img {
         height: 24px;
@@ -434,17 +438,17 @@ li {
       }
 
       .no_select {
-        -moz-user-select: none;
+        -moz-user-select   : none;
         /* Firefox私有属性 */
         -webkit-user-select: none;
         /* WebKit内核私有属性 */
-        -ms-user-select: none;
+        -ms-user-select    : none;
         /* IE私有属性(IE10及以后) */
-        -khtml-user-select: none;
+        -khtml-user-select : none;
         /* KHTML内核私有属性 */
-        -o-user-select: none;
+        -o-user-select     : none;
         /* Opera私有属性 */
-        user-select: none;
+        user-select        : none;
         /* CSS3属性 */
       }
     }
@@ -534,8 +538,8 @@ li {
   //  popup
   .esri-popup {
     // background-color: rgba(255, 255, 255, 1);
-    color              : #000;
-    z-index            : 10;
+    color  : #000;
+    z-index: 10;
 
     .esri-popup__main-container {
       // overflow              : hidden;
@@ -579,7 +583,7 @@ li {
     .esri-popup__pointer-direction {
       // background-color: rgba(25, 43, 78, 1);
       // box-shadow      : 0px 10px 25px #305cbc inset;
-      background-color   : rgba(37, 37, 37);
+      background-color: rgba(37, 37, 37);
     }
 
     .esri-popup__button {
@@ -738,31 +742,31 @@ input[type="checkbox"] {
   -moz-appearance   : none;
   appearance        : none;
   /*编辑我们自己的样式*/
-  position     : relative;
-  width        : 18px;
-  height       : 18px;
+  position          : relative;
+  width             : 18px;
+  height            : 18px;
   // transform : translate(-9px, -8px);
-  background   : rgba(21, 249, 253, 0.66);
-  border       : 1px solid rgba(255, 255, 255, 0.2);
-  border       : 0px;
-  outline      : none;
-  cursor       : pointer;
-  top          : 2px;
+  background        : rgba(21, 249, 253, 0.66);
+  border            : 1px solid rgba(255, 255, 255, 0.2);
+  border            : 0px;
+  outline           : none;
+  cursor            : pointer;
+  top               : 2px;
 }
 
 input[type="checkbox"]:after {
-  content    : "√";
-  position   : absolute;
-  display    : block;
-  width      : 100%;
-  height     : 100%;
-  color      : #fff;
-  text-align : center;
-  line-height: 24px;
+  content              : "√";
+  position             : absolute;
+  display              : block;
+  width                : 100%;
+  height               : 100%;
+  color                : #fff;
+  text-align           : center;
+  line-height          : 24px;
   /*增加动画*/
-  -webkit-transition: all ease-in-out 300ms;
-  -moz-transition   : all ease-in-out 300ms;
-  transition        : all ease-in-out 300ms;
+  -webkit-transition   : all ease-in-out 300ms;
+  -moz-transition      : all ease-in-out 300ms;
+  transition           : all ease-in-out 300ms;
   /*利用border-radius和opacity达到填充的假象，首先隐藏此元素*/
   -webkit-border-radius: 20px;
   -moz-border-radius   : 20px;

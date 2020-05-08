@@ -12,7 +12,7 @@ import Vue from "vue";
  */
 window.env =
   location.host.includes("localhost") || location.host.includes("192.168.0.200")
-    ? "prod"
+    ? "outside"
     : location.host.includes("lysb.lucheng.gov.cn")
     ? "outside"
     : "prod";

@@ -61,7 +61,7 @@
           <div class="xcVideo">
             <video
               muted
-              :src="`${server}/icon/canvassImg/book/lc.mp4`"
+              :src="`${server}/icon/canvassImg/book/lc_new.mp4`"
               autoplay
               controls
               loop

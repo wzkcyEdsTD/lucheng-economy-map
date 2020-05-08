@@ -225,25 +225,25 @@ export default {
 
       that.map.on("style.load", () => {
         // 分块顺序加载白模
-        createBaseModel(1)
-          // .then(() => {
-          //   return createBaseModel(2);
-          // })
-          // .then(() => {
-          //   return createBaseModel(3);
-          // })
-          // .then(() => {
-          //   return createBaseModel(4);
-          // })
-          // .then(() => {
-          //   return createBaseModel(5);
-          // })
-          // .then(() => {
-          //   return buildPicLoad();
-          // })
-          // .then(() => {
-          //   return addBuildPic();
-          // });
+        createBaseModel(1);
+        // .then(() => {
+        //   return createBaseModel(2);
+        // })
+        // .then(() => {
+        //   return createBaseModel(3);
+        // })
+        // .then(() => {
+        //   return createBaseModel(4);
+        // })
+        // .then(() => {
+        //   return createBaseModel(5);
+        // })
+        // .then(() => {
+        //   return buildPicLoad();
+        // })
+        // .then(() => {
+        //   return addBuildPic();
+        // });
 
         // that.map.addLayer({
         //   id: "swl",
