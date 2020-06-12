@@ -1,3 +1,11 @@
+/*
+ * @Author: eds
+ * @Date: 2020-03-04 17:25:04
+ * @LastEditTime: 2020-06-11 20:11:20
+ * @LastEditors: eds
+ * @Description: 
+ * @FilePath: \lucheng-economy-map\src\api\beans\auth.js
+ */ 
 import { getDefaultAxios } from "../index.js";
 import { WRT_config } from "@/components/common/Tmap";
 const { serverCompatible, login } = WRT_config;

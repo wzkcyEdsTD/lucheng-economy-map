@@ -12,7 +12,7 @@ import Vue from "vue";
  */
 window.env =
   location.host.includes("localhost") || location.host.includes("192.168.0.200")
-    ? "outside"
+    ? "prod"
     : location.host.includes("lysb.lucheng.gov.cn")
     ? "outside"
     : "prod";
@@ -37,7 +37,7 @@ const CONFIG_DEV = {
   FORWARD_HOST: "http://192.168.0.123:6080/arcgis/rest/services",
   OTHER_HOST: "https://services.wzmap.gov.cn/server/rest/services",
   SERVER_HOST: "http://192.168.0.200:9003/s/lc",
-  API_HOST: "http://192.168.0.200:9003",
+  API_HOST: "http://172.20.89.68:5001",
   LOGIN_HOST: "http://192.168.0.200:9003"
 };
 //  生产环境配置
@@ -181,7 +181,9 @@ export const TDDJCQ = `${OTHER_HOST}/Hosted/JCQ/VectorTileServer`;
 //  天地图-矢量
 export const TDTSL =
   "http://srv.zjditu.cn/ZJEMAP_2D/wmts?SERVICE=WMTS&REQUEST=GetTile&VERSION=1.0.0&LAYER=3dmap&STYLE=default&TILEMATRIXSET=custom_3dmap&TILEMATRIX={level}&TILEROW={row}&TILECOL={col}&FORMAT=image%2Fpng";
-//  天地图-招商-影像图2018
+//  天地图-招商-影像图2017
+export const TDTIMAGE2019 = `${OTHER_HOST}/TDT/YX_2019/MapServer`;
+  //  天地图-招商-影像图2018
 export const TDTIMAGE2018 = `http://srv.zjditu.cn/ZJDOM_2D/wmts?SERVICE=WMTS&REQUEST=GetTile&VERSION=1.0.0&LAYER=3dmap&STYLE=default&TILEMATRIXSET=custom_3dmap&TILEMATRIX={level}&TILEROW={row}&TILECOL={col}&FORMAT=image%2Fpng`;
 //  天地图-招商-影像图2017
 export const TDTIMAGE2017 = `${OTHER_HOST}/TDT/YX2017/MapServer`;

@@ -2,6 +2,7 @@ import {
   TDTDSJ,
   TDTXZQH,
   TDTJY,
+  TDTIMAGE2019,
   TDTIMAGE2017,
   TDTIMAGE2012,
   TDT25D
@@ -65,6 +66,14 @@ export default {
       icon: "icon iconmap"
     },
     children: {
+      image2019: {
+        name: "2019年度影像",
+        id: "image2019",
+        fun: "addHistory",
+        layer: "TileLayer",
+        url: TDTIMAGE2019,
+        check: false
+      },
       image2017: {
         name: "2018年度影像",
         id: "image2017",
