@@ -132,6 +132,7 @@ export default {
     search() {
       const rangeSql = [];
       const asideSortByBuild = {};
+      const topForceList = [];
       const forceList = [];
       const isAside =
         (this.searchRange.jzmj[0] && this.searchRange.jzmj[1]) ||
@@ -194,12 +195,22 @@ export default {
               }
             });
             for (let d in asideSortByBuild) {
-              forceList.push({
-                ...asideSortByBuild[d],
-                display: asideSortByBuild[d].asideChildren.slice(0, 5)
-              });
+              //  世贸大厦放第一个
+              if (asideSortByBuild[d].name == "世贸中心大厦") {
+                topForceList.push({
+                  ...asideSortByBuild[d],
+                  display: asideSortByBuild[d].asideChildren.slice(0, 5)
+                });
+              } else {
+                forceList.push({
+                  ...asideSortByBuild[d],
+                  display: asideSortByBuild[d].asideChildren.slice(0, 5)
+                });
+              }
             }
-            this.forceList = forceList.sort(this.$util.compare("gdid"));
+            this.forceList = topForceList.concat(
+              forceList.sort(this.$util.compare("gdid"))
+            );
           });
         });
     },
