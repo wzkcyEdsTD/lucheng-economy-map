@@ -32,7 +32,37 @@ import lcxxApi from "@/api/beans/u_lcxx";
 import qyzcApi from "@/api/beans/u_qyzc";
 import qynbApi from "@/api/beans/u_qynb";
 import Frame from "@/components/economy/EcoArcgis/frame";
-
+const modelListArr = [
+  "shimao1",
+  "shimao2",
+  "fazhan1",
+  "fazhan2",
+  "zhongtong1",
+  "zhongtong2",
+  "chengyuan",
+  "guoxin",
+  "huameng",
+  "jianshe",
+  "longrui",
+  "lugang",
+  "songtai",
+  "xincheng",
+  "zhixin"
+];
+const modelListObj = {
+  5: ["shimao1", "shimao2"],
+  4: ["fazhan1", "fazhan2"],
+  3: ["zhongtong1", "zhongtong2"],
+  16: ["chengyuan"],
+  20: ["guoxin"],
+  1: ["huameng"],
+  15: ["jianshe"],
+  14: ["longrui"],
+  21: ["lugang"],
+  13: ["songtai"],
+  9: ["xincheng"],
+  11: ["zhixin"]
+};
 export default {
   name: "mapbox",
   data() {
@@ -86,22 +116,23 @@ export default {
     lyItem: {
       handler(newVal, Val) {
         this.lyItemid = newVal;
-        this.$nextTick(() => {
-          this.init();
-        });
       },
       immediate: true
     }
   },
 
   created() {},
-  mounted() {
-    // this.init();
+  async mounted() {
+    this.$hub.$off("model-on");
+    this.$hub.$on("model-on", async () => {
+      await this.init();
+    });
   },
   methods: {
     init() {
       const that = this;
       return new Promise((resolve, reject) => {
+        if (that.map) return resolve(true);
         that.map = new window.mapboxgl.Map({
           container: "main",
           center: [120.68752090621764, 28.010845855663625, 0],
@@ -141,8 +172,6 @@ export default {
         that.map.on("style.load", () => {
           // 商务楼
           that.createBusinessModel();
-
-          // console.log(this.lyItemid);
           that.fetchBuild({
             name: "buildid",
             val: this.lyItemid,
@@ -158,20 +187,6 @@ export default {
             .then(() => {
               return that.createBaseModel(2);
             })
-            // .createBaseModel(1)
-            // .then(() => {
-            //   return that.createBaseModel(2);
-            // })
-            // .then(() => {
-            //   return that.createBaseModel(3);
-            // })
-            // .then(() => {
-            //   return that.createBaseModel(4);
-            // })
-            // .then(() => {
-            //   return that.createBaseModel(5);
-            // })
-            // .createBaseModel()
             .then(() => {
               return that.buildPicLoad();
             })
@@ -202,9 +217,7 @@ export default {
 
             if (features.length) {
               that.$parent.build_gdid = features[0].properties.ID;
-
               that.closeAround();
-
               that.fetchBuild({
                 name: "buildid",
                 val: features[0].properties.ID,
@@ -218,41 +231,43 @@ export default {
     },
 
     // 添加精细模型
-    addModelLayers() {
+    addModelLayers(doAll, buildid) {
+      const value = modelListObj[buildid];
       const that = this;
       var promise = new Promise((resolve, reject) => {
-        that.modelList = [
-          "shimao1",
-          "shimao2",
-          "fazhan1",
-          "fazhan2",
-          "zhongtong1",
-          "zhongtong2",
-          "chengyuan",
-          "guoxin",
-          "huameng",
-          "jianshe",
-          "longrui",
-          "lugang",
-          "songtai",
-          "xincheng",
-          "zhixin"
-        ];
-
-        that.modelList.map(item => {
-          that.map.addLayer(
-            that.createModelLayer(item, [
-              120.66662090621764,
-              28.014045855663625,
-              0
-            ])
-          );
+        // that.modelList = [...modelListArr];
+        const _modelList_ = [];
+        modelListArr.map(item => {
+          if (doAll) {
+            if (!~that.modelList.indexOf(item)) {
+              that.map.addLayer(
+                that.createModelLayer(item, [
+                  120.66662090621764,
+                  28.014045855663625,
+                  0
+                ])
+              );
+              _modelList_.push(item);
+            }
+          } else {
+            value.map(v => {
+              if (!~that.modelList.indexOf(v) && item == v) {
+                that.map.addLayer(
+                  that.createModelLayer(item, [
+                    120.66662090621764,
+                    28.014045855663625,
+                    0
+                  ])
+                );
+                _modelList_.push(item);
+              }
+            });
+          }
         });
-
+        that.modelList = that.modelList.concat(_modelList_);
         that.modelList.map(item => {
           that.map.setLayoutProperty(item, "visibility", "visible");
         });
-
         resolve();
       });
       return promise;
@@ -271,7 +286,6 @@ export default {
             data: `${server}/mapbox/geojson/kgbm${mId}.geojson`
           },
           paint: {
-            // "fill-extrusion-color": ["get", "color"],
             "fill-extrusion-color": "rgba(162, 169, 183, 1)",
             "fill-extrusion-height": ["get", "e3"],
             "fill-extrusion-opacity": 0.8
@@ -298,12 +312,10 @@ export default {
           },
           paint: {
             "fill-extrusion-color": ["get", "color"],
-            // "fill-extrusion-color": "rgba(162, 169, 183, 1)",
             "fill-extrusion-height": ["get", "e3"],
             "fill-extrusion-opacity": 0.6
           }
         });
-
         resolve();
       });
       return promise;
@@ -742,8 +754,8 @@ export default {
     },
 
     fetchBuild({ name, val, url = LIGHTBAR_RFEATURE }, fn) {
-      console.log("entry-fetchBuild");
       if (!val) return;
+      console.log("entry-fetchBuild");
       const that = this;
       const arr = [0, 0, 0];
       let lyhx = {};
@@ -787,13 +799,8 @@ export default {
                 that.$parent.forceBuilding = lyhx[0];
               });
             that.changeBuildingDisplay(() => {
-              if (that.$parent.isAside) {
-                that.$parent.isAside = false;
-              }
+              that.$parent.isAside = +new Date();
             });
-            // if(that.lyItemid){
-            //   that.$parent.$refs.searchBox.search(that.lyItemid)
-            // }
           }
         });
       });
@@ -852,7 +859,6 @@ export default {
         "visibility",
         that.isAside == "闲置分析" ? "visible" : "none"
       );
-
       if (that.isAside == "闲置分析") {
         if (that.modelList.length) {
           that.modelList.map(item => {
@@ -875,13 +881,6 @@ export default {
           that.map.setLayoutProperty(`baseModel${i}-1`, "visibility", "none");
         }
       } else {
-        if (!that.modelList.length) {
-          that.addModelLayers();
-        } else {
-          that.modelList.map(item => {
-            that.map.setLayoutProperty(item, "visibility", "visible");
-          });
-        }
         for (let i = 0; i < 3; i++) {
           that.map.setLayoutProperty(`kgModel${i}-1`, "visibility", "none");
           that.map.setLayoutProperty(
@@ -907,6 +906,7 @@ export default {
           20,
           21
         ]);
+        that.addModelLayers(that.isAside == "三维沙盘", that.buildid);
       }
     },
 

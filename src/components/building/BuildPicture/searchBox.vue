@@ -111,7 +111,9 @@ export default {
   components: { vSelect },
   created() {},
   mounted() {
-    this.search();
+    this.search(() => {
+      this.$hub.$emit("model-on", {});
+    });
   },
   computed: {},
   methods: {
@@ -129,7 +131,7 @@ export default {
     showAsideList(item, shallAside) {
       this.$emit("changeForceBuild", item, shallAside);
     },
-    search() {
+    search(fn) {
       const rangeSql = [];
       const asideSortByBuild = {};
       const topForceList = [];
@@ -212,6 +214,7 @@ export default {
               forceList.sort(this.$util.compare("gdid"))
             );
           });
+          fn && fn();
         });
     },
     fetchBuild(gdid) {

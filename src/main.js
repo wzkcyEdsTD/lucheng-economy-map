@@ -1,3 +1,11 @@
+/*
+ * @Author: eds
+ * @Date: 2020-06-15 17:13:06
+ * @LastEditTime: 2020-06-16 09:27:42
+ * @LastEditors: eds
+ * @Description: 
+ * @FilePath: \lucheng-economy-map\src\main.js
+ */ 
 import Vue from "vue";
 import App from "./App.vue";
 import util from "./components/common/util.js";
@@ -13,6 +21,7 @@ Vue.config.productionTip = false;
 Vue.prototype.$util = util;
 Vue.prototype.$ajax = $.ajax;
 Vue.prototype.$window = window;
+Vue.prototype.$hub = new Vue(); //  全局事件线程
 
 //路由跳转
 Vue.prototype.$goRoute = function(index) {
