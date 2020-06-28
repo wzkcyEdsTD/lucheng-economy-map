@@ -1,3 +1,11 @@
+/*
+ * @Author: eds
+ * @Date: 2020-03-04 17:25:05
+ * @LastEditTime: 2020-06-28 16:40:39
+ * @LastEditors: eds
+ * @Description: 
+ * @FilePath: \lucheng-economy-map\src\components\building\BuildCommon\hoverPanelConfig.js
+ */ 
 import { NICEMODEL } from "@/components/common/Tmap";
 export default {
   _25d: {
@@ -6,7 +14,7 @@ export default {
     class: "left",
     icon: "icon iconmap",
     check: false,
-    children: {}
+    children: {},
   },
   _3d: {
     name: "精细三维",
@@ -17,9 +25,9 @@ export default {
     id: "_3d",
     explainer: {
       name: "地图工具",
-      icon: "icon icon-"
+      icon: "icon icon-",
     },
-    children: {}
+    children: {},
   },
   _3sd: {
     name: "三维",
@@ -27,20 +35,7 @@ export default {
     icon: "icon iconRectangleCopy8",
     check: false,
     id: "_3sd",
-    children: {
-      _3d_model: {
-        name: "三维沙盘",
-        id: "_3d_model",
-        fun: "do3dModel",
-        check: true
-      },
-      _3d_analyze: {
-        name: "闲置分析",
-        id: "_3d_analyze",
-        fun: "do3dAnalyze",
-        check: false
-      }
-    }
+    children: {},
   },
   _2d: {
     name: "二维",
@@ -48,6 +43,6 @@ export default {
     icon: "icon icondingwei",
     check: false,
     id: "2d",
-    children: {}
-  }
+    children: {},
+  },
 };

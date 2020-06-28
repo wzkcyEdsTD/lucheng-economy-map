@@ -1,7 +1,7 @@
 /*
  * @Author: eds
  * @Date: 2020-06-15 17:13:06
- * @LastEditTime: 2020-06-16 09:27:42
+ * @LastEditTime: 2020-06-28 15:13:37
  * @LastEditors: eds
  * @Description: 
  * @FilePath: \lucheng-economy-map\src\main.js
@@ -48,7 +48,7 @@ tokenCatch();
  */
 const app = async fn => {
   if (location.host.includes("localhost")) {
-    await auth_token("admin");
+    await auth_token("kcadmin");
   } else if (location.host.includes("lysb.lucheng.gov.cn")) {
     await auth_token("游客");
   } else {

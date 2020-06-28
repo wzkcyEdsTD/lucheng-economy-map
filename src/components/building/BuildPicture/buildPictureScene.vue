@@ -1,14 +1,6 @@
 <template>
   <div class="buildMap">
     <div id="buildPictureScene"></div>
-    <transition name="frame">
-      <Frame
-        @close="change(false)"
-        v-if="isShow"
-        :company="forceCompany"
-        :fromCanvass="fromCanvass"
-      />
-    </transition>
   </div>
 </template>
 
@@ -18,7 +10,7 @@ import {
   OPTION,
   WRT_config,
   FINEMODEL,
-  IMAGELAYER,
+  IMAGELAYERDSJ,
   BUILDAROUND,
   LYHX,
   LYZS,
@@ -34,8 +26,6 @@ import { createPicutureMap, createUnusedMap, addUnused } from "./arcgis";
 import indexApi from "@/api/beans/u_index";
 import qyzcApi from "@/api/beans/u_qyzc";
 import qynbApi from "@/api/beans/u_qynb";
-import Frame from "@/components/economy/EcoArcgis/frame";
-//  import dynamicContext from "./widget/THREE_BUILDING";
 export default {
   name: "buildPictureScene",
   data() {
@@ -54,8 +44,15 @@ export default {
       y: null
     };
   },
-  components: { Frame },
-  props: ["forceBuildingId", "mapsceneShow", "isAside", "lyItem", "fcClick","commonSearch","searchbox_display"],
+  props: [
+    "forceBuildingId",
+    "mapsceneShow",
+    "isAside",
+    "lyItem",
+    "fcClick",
+    "commonSearch",
+    "searchbox_display"
+  ],
   watch: {
     mapsceneShow: {
       handler(newVal, val) {
@@ -76,19 +73,13 @@ export default {
           this.changeBuildingDisplay();
         }
       }
-    },
-    // searchbox_display:{
-    //   handler(newVal,val){
-
-    //   }
-    // }
+    }
   },
   created() {},
   async mounted() {
     await this.createMap(() => {
       this.changeMap();
     });
-    this.mapsceneShow === "_3d" && (await this.addNICEMODEL());
   },
   computed: {},
   methods: {
@@ -98,177 +89,98 @@ export default {
         [
           "esri/Map",
           "esri/views/SceneView",
-          "esri/Camera",
-          "esri/layers/FeatureLayer",
-          "esri/layers/MapImageLayer",
           "esri/layers/SceneLayer",
           "esri/layers/VectorTileLayer",
-          "esri/widgets/Legend",
-          "esri/views/3d/externalRenderers",
-          "esri/geometry/SpatialReference",
-          "esri/core/watchUtils",
           "dojo/domReady!"
         ],
         OPTION
-      ).then(
-        ([
-          Map,
-          SceneView,
-          Camera,
-          FeatureLayer,
-          MapImageLayer,
-          SceneLayer,
-          VectorTileLayer,
-          Legend,
-          externalRenderers,
-          SpatialReference,
-          watchUtils
-        ]) => {
-          const imgLayer = new VectorTileLayer({ url: IMAGELAYER, id: "swyx" }); //三维底图
-          // const imgBasic = new MapImageLayer({
-          //   url: LYHX,
-          //   id: "imgBasic",
-          //   sublayers: [{ id: 0 }]
-          // });
-          that.map = new Map({ layers: [imgLayer /* imgBasic */] });
-          that.view = new SceneView({
-            container: "buildPictureScene",
-            map: that.map,
-            environment: {
-              lighting: {
-                directShadowsEnabled: true,
-                ambientOcclusionEnabled: true
-              }
+      ).then(([Map, SceneView, SceneLayer, VectorTileLayer]) => {
+        const imgLayer = new VectorTileLayer({
+          url: IMAGELAYERDSJ,
+          id: "swyx"
+        }); //三维底图
+        that.map = new Map({ layers: [imgLayer /* imgBasic */] });
+        that.view = new SceneView({
+          container: "buildPictureScene",
+          map: that.map,
+          environment: {
+            lighting: {
+              directShadowsEnabled: true,
+              ambientOcclusionEnabled: true
             }
-          });
-          that.view.popup.autoOpenEnabled = false;
-          //地图点击事件，显示楼宇信息，楼宇图片和楼层按钮
-          that.view.on("click", function(evt_) {
-            that.view.hitTest(evt_).then(response => {
-              that.view.goTo({
-                position: {
-                  x: response.results[0].mapPoint.x,
-                  y: response.results[0].mapPoint.y - 0.012,
-                  z: 1000,
-                  spatialReference: {
-                    wkid: 4326
-                  }
-                },
-                heading: 0,
-                tilt: 61
-              });
-
-              //帅选图层字段
-              let attrs = response.results.filter(item => {
-                return (
-                  item.graphic.layer.id == "lightbar" ||
-                  item.graphic.layer.id == "buildingsLayer1" ||
-                  item.graphic.layer.id == "buildingsLayer2" ||
-                  item.graphic.layer.id == "buildingsLayer3"
-                );
-              });
-              const attr = attrs.length ? attrs[0] : null;
-              if (!attr.graphic.attributes.固定id) {
-                attr &&
-                  that.fetchBuild({
-                    name: "objectid",
-                    val: attr.graphic.attributes.objectid,
-                    url: LIGHTBAR_RFEATURE
-                  });
-              } else {
-                attr &&
-                  that.fetchBuild({
-                    name: "buildid",
-                    val: attr.graphic.attributes.固定id,
-                    url: FINEMODEL_FEATURE
-                  });
-              }
-            });
-          });
-          // 地图加载完成后视角
-          that.view.whenLayerView(imgLayer).then(layerView => {
+          }
+        });
+        that.view.popup.autoOpenEnabled = false;
+        //地图点击事件，显示楼宇信息，楼宇图片和楼层按钮
+        that.view.on("click", function(evt_) {
+          that.view.hitTest(evt_).then(response => {
             that.view.goTo({
               position: {
-                // x: 120.66094203201507,
-                // y: 27.99676119621565,
-                // z: 1000,
-                x: 120.66094203201507,
-                y: 27.99906119621565,
-                z: 800,
+                x: response.results[0].mapPoint.x,
+                y: response.results[0].mapPoint.y - 0.012,
+                z: 1000,
                 spatialReference: {
                   wkid: 4326
                 }
               },
               heading: 0,
-              tilt: 60
+              tilt: 61
             });
-            /* const dynamicBuilding = new dynamicContext(that.view, {
-              externalRenderers,
-              SpatialReference
-            });
-            externalRenderers.add(that.view, dynamicBuilding); */
 
-            // 监听视角倾角
-            // watchUtils.whenTrue(that.view, "stationary", function() {
-            //   if (that.mapsceneShow == "_3sd" && that.view.camera.tilt > 60) {
-            //     that.map.findLayerById("jxsw")
-            //       ? (that.map.findLayerById("jxsw").visible = true)
-            //       : null;
-            //   }
-            //   else {
-            //     that.map.findLayerById("jxsw")
-            //       ? (that.map.findLayerById("jxsw").visible = false)
-            //       : null;
-            //   }
-            // });
-
-            //  默认传入楼宇跳转定位
-            that.fetchBuild({
-              name: "buildid",
-              val: this.lyItem || this.commonSearch,
-              url: LIGHTBAR_RFEATURE
+            //帅选图层字段
+            let attrs = response.results.filter(item => {
+              return (
+                item.graphic.layer.id == "lightbar" ||
+                item.graphic.layer.id == "buildingsLayer1" ||
+                item.graphic.layer.id == "buildingsLayer2" ||
+                item.graphic.layer.id == "buildingsLayer3"
+              );
             });
-            
+            const attr = attrs.length ? attrs[0] : null;
+            if (!attr.graphic.attributes.固定id) {
+              attr &&
+                that.fetchBuild({
+                  name: "objectid",
+                  val: attr.graphic.attributes.objectid,
+                  url: LIGHTBAR_RFEATURE
+                });
+            } else {
+              attr &&
+                that.fetchBuild({
+                  name: "buildid",
+                  val: attr.graphic.attributes.固定id,
+                  url: FINEMODEL_FEATURE
+                });
+            }
           });
-          fn && fn();
-        }
-      );
+        });
+        // 地图加载完成后视角
+        that.view.whenLayerView(imgLayer).then(layerView => {
+          that.view.goTo({
+            position: {
+              x: 120.66094203201507,
+              y: 27.99906119621565,
+              z: 800,
+              spatialReference: {
+                wkid: 4326
+              }
+            },
+            heading: 0,
+            tilt: 60
+          });
+
+          //  默认传入楼宇跳转定位
+          that.fetchBuild({
+            name: "buildid",
+            val: this.lyItem || this.commonSearch,
+            url: LIGHTBAR_RFEATURE
+          });
+        });
+        fn && fn();
+      });
     },
     changeMapTool(_item) {
       if (!this.map && !this.view) return;
-      if (_item === "_3d") {
-        this.addNICEMODEL();
-      } else {
-        // this.map.findLayerById("imgBasic") &&
-        //   (this.map.findLayerById("imgBasic").visible = true);
-        this.map.findLayerById("jxsw") &&
-          (this.map.findLayerById("jxsw").visible = true);
-        this.map.findLayerById("mx") &&
-          (this.map.findLayerById("mx").visible = true);
-        this.map.findLayerById("niceModel") &&
-          (this.map.findLayerById("niceModel").visible = false);
-      }
-    },
-    addNICEMODEL() {
-      loadModules(
-        ["esri/layers/SceneLayer", "esri/layers/WebTileLayer"],
-        OPTION
-      ).then(([SceneLayer, WebTileLayer]) => {
-        // this.map.findLayerById("imgBasic") &&
-        //   (this.map.findLayerById("imgBasic").visible = false);
-        this.map.findLayerById("jxsw") &&
-          (this.map.findLayerById("jxsw").visible = false);
-        this.map.findLayerById("mx") &&
-          (this.map.findLayerById("mx").visible = false);
-        this.map.findLayerById("niceModel")
-          ? (this.map.findLayerById("niceModel").visible = true)
-          : this.map.add(
-              new SceneLayer({
-                url: NICEMODEL,
-                id: "niceModel"
-              })
-            );
-      });
     },
 
     /**
@@ -527,73 +439,34 @@ export default {
      */
     changeMap() {
       if (!this.map && !this.view) return;
-      const that = this;
-      const mx = that.map.findLayerById("mx");
-      const lightbar = that.map.findLayerById("lightbar");
-      // const graphicsLayerPic = that.map.findLayerById("graphicsLayerPic");
-      const buildingsLayer1 = that.map.findLayerById("buildingsLayer1");
-      const buildingsLayer2 = that.map.findLayerById("buildingsLayer2");
-      const buildingsLayer3 = that.map.findLayerById("buildingsLayer3");
-      const graphicsLayerUnused = that.map.findLayerById("graphicsLayerUnused");
-      if (this.isAside) {
-        if (mx) {
-          mx && (mx.visible = false);
-          lightbar && (lightbar.visible = false);
-          // graphicsLayerPic.removeAll();
-        }
-        if (buildingsLayer1) {
-          buildingsLayer1.visible = true;
-          buildingsLayer2.visible = true;
-          buildingsLayer3.visible = true;
-          graphicsLayerUnused && (graphicsLayerUnused.visible = true);
-          // addUnused(that);
-        } else {
-          createUnusedMap(that);
-          addUnused(that);
-        }
-      } else {
-        if (buildingsLayer1) {
-          buildingsLayer1.visible = false;
-          buildingsLayer2.visible = false;
-          buildingsLayer3.visible = false;
-          graphicsLayerUnused && (graphicsLayerUnused.visible = false);
-        }
-        if (mx) {
-          mx.visible = true;
-          lightbar.visible = true;
-          // addSymbol(that);
-        } else {
-          createPicutureMap(that);
-          // addSymbol(that);
-        }
-      }
+      createPicutureMap(this);
     },
     //显示入驻企业信息
     fetchCompany(uuid, fn) {
       const resultApi = [];
       qyzcApi
-        .ds({ where: `uuid='${uuid.replace(/\ /g, "")}'`, count: 10 })
+        .ds({ where: `uuid='${uuid.replace(/ /g, "")}'`, count: 10 })
         .then(({ data }) => {
           if (!data.length) return this.change(false);
           resultApi.push(data[0]);
           this.change(true);
           qynbApi
             .pjzb({
-              where: `uuid='${uuid.replace(/\ /g, "")}'`,
+              where: `uuid='${uuid.replace(/ /g, "")}'`,
               count: 10
             })
             .then(({ data }) => {
               resultApi.push(data[0] || {});
               qynbApi
                 .ds({
-                  where: `a.uuid='${uuid.replace(/\ /g, "")}'`,
+                  where: `a.uuid='${uuid.replace(/ /g, "")}'`,
                   count: 10
                 })
                 .then(({ data }) => {
                   resultApi.push(data);
                   qynbApi
                     .ydxx({
-                      uuid: uuid.replace(/\ /g, "")
+                      uuid: uuid.replace(/ /g, "")
                     })
                     .then(({ data }) => {
                       resultApi.push(data);

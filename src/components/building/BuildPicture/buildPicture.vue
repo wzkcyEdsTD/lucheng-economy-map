@@ -1,16 +1,6 @@
 <template>
   <div class="buildPictureMap">
-    <div class="buildPictureScene" v-if="mapsceneShow === '_3d' || mapsceneShow === '_3sd'">
-      <!-- <sceneArcgis
-        ref="scene"
-        :mapsceneShow="mapsceneShow"
-        :isAside="isAside"
-        :lyItem="lyItem"
-        :fcClick="fcClick"
-        :commonSearch="commonSearch"
-        :searchbox_display="searchbox_display"
-      />-->
-
+    <div class="buildPictureScene" v-show="mapsceneShow === '_3sd'">
       <mapbox
         ref="scene"
         :isAside="isAside"
@@ -20,7 +10,17 @@
         :searchbox_display="searchbox_display"
       ></mapbox>
     </div>
-    <div class="PictureMap2" v-if="mapsceneShow === '2d' || mapsceneShow === '_25d'">
+    <div class="buildPictureSceneFine" v-show="mapsceneShow === '_3d'">
+      <sceneArcgis
+        ref="scenefine"
+        :isAside="isAside"
+        :lyItem="lyItem"
+        :fcClick="fcClick"
+        :commonSearch="commonSearch"
+        :searchbox_display="searchbox_display"
+      />
+    </div>
+    <div class="PictureMap2" v-show="mapsceneShow === '2d' || mapsceneShow === '_25d'">
       <mapArcgis
         id="PictureMap2"
         ref="buildMap"
@@ -28,7 +28,7 @@
         :forceBuildingId="forceBuilding.gdid"
       />
     </div>
-    <div class="panelSwitch" v-if="searchbox_display">
+    <div class="panelSwitch" v-if="searchbox_display && mapsceneShow === '_3sd'">
       <ul>
         <li
           v-for="(item,index) in panel"
@@ -37,18 +37,20 @@
           @click="setAside(index,item)"
         >{{item}}</li>
       </ul>
-      <!-- <span :class="isAside?'panelSwitchAside':''" @click="setAside(true)">闲置分析</span>
-      <span :class="!isAside?'panelSwitchAside':''" @click="setAside(false)">三维沙盘</span>-->
     </div>
     <transition name="frame">
-      <searchBox v-show="searchbox_display" ref="searchBox" @changeForceBuild="changeForceBuild" />
+      <searchBox
+        v-show="mapsceneShow != '_3d' && searchbox_display"
+        ref="searchBox"
+        @changeForceBuild="changeForceBuild"
+      />
     </transition>
     <transition name="frame">
       <buidInform
         ref="buidInform"
         @showAround="showAround"
         @closeAround="closeAround"
-        v-if="buidinform_dispaly"
+        v-if="mapsceneShow != '_3d' && buidinform_dispaly"
         :forceBuilding="forceBuilding"
         :showAsideList="showAsideList"
         :_asideList="asideList"
@@ -65,8 +67,7 @@
 
 <script>
 import mapbox from "../mapbox/mapbox/mapbox";
-
-// import sceneArcgis from "./buildPictureScene";
+import sceneArcgis from "./buildPictureScene";
 import mapArcgis from "../BuildCommon/buildMap";
 import searchBox from "./searchBox";
 import buidInform from "@/components/common/buildFrame/buidInform";
@@ -98,7 +99,8 @@ export default {
     searchBox,
     buidInform,
     hoverPanel,
-    /* sceneArcgis, */ mapArcgis,
+    sceneArcgis,
+    mapArcgis,
     mapbox
   },
   props: {
@@ -148,7 +150,6 @@ export default {
       this.$refs.scene.showAround(params);
     },
     closeAround() {
-      console.log("close-around");
       this.$refs.scene.closeAround();
     },
     setAside(index, tag) {
@@ -166,11 +167,6 @@ export default {
         const item = _option[d];
         if (item.check) {
           this.mapsceneShow = item.id;
-        }
-        for (let _d in item.children) {
-          const _item = item.children[_d];
-          _item.id == "_3d_model" && _item.check && (this.isAside = false);
-          _item.id == "_3d_analyze" && _item.check && (this.isAside = true);
         }
       }
     },

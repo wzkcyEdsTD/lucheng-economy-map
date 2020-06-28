@@ -233,7 +233,9 @@ export const jdOption = {
     {
       boundaryGap: true,
       axisLabel: {
-        color: "#29DAFF"
+        color: "#29DAFF",
+        interval: 0,
+        rotate: -30,
       },
       axisLine: {
         show: true,

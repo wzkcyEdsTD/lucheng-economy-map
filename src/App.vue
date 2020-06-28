@@ -77,6 +77,7 @@ export default {
   },
   mounted() {
     this.setLoation();
+    this.doDialogOpen();
     if (
       location.host.includes("lysb.lucheng.gov.cn") ||
       location.host.includes("localhost")

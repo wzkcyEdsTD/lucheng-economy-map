@@ -177,7 +177,8 @@ export default {
         大南街道: { mj: [0], qys: [0], name: "大南" },
         五马街道: { mj: [0], qys: [0], name: "五马" },
         广化街道: { mj: [0], qys: [0], name: "广化" },
-        滨江街道: { mj: [0], qys: [0], name: "滨江" }
+        滨江街道: { mj: [0], qys: [0], name: "滨江" },
+        蒲鞋市街道: { mj: [0], qys: [0], name: "蒲鞋市" }
       },
       geoData: [
         {
