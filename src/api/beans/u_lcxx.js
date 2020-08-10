@@ -16,11 +16,10 @@ async function ds(_option = {}) {
           alias: "a",
           orm: "name",
           //  lcxx表录入信息没有固定id，故先与lyjbxx联表获取固定id,再通过lyxx表左联获取列表，最后与qyzc联表获取入驻企业信息
-          name:
-            "(select x.*,y.hy from (select d.*,e.hydm from (select distinct b.uuid,b.status,b.rzqy,b.fjh,convert(float,b.jzmj) as jzmj,b.mpfmzj,b.mpfmwy,b.szlc,b.fr,b.lxdh1,c.ssjd,c.name,c.gdid from u_lyxx as c left join u_lcxx as b on b.exid = c.gdid ) as d left join u_qyzc as e on d.uuid = e.uuid) as x left join u_lchyxx as y on x.hydm = y.hydm)"
+          name:"(select distinct b.uuid,b.status,b.rzqy,b.fjh,convert(float,b.jzmj) as jzmj,b.mpfmzj,b.mpfmwy,b.szlc,b.fr,b.lxdh1,c.ssjd,c.name,c.gdid,b.hy from u_lyxx as c left join u_lcxx as b on b.exid = c.gdid)"
         }
       ],
-      cols: [
+      cols: [ 
         { name: "status", raw: "a.status" },
         { name: "rzqy", raw: "a.rzqy" },
         { name: "fjh", raw: "a.fjh" },

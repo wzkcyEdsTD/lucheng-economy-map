@@ -194,6 +194,25 @@ import lcxxApi from "@/api/beans/u_lcxx";
 import { WRT_config } from "@/components/common/Tmap";
 const { server } = WRT_config;
 import { buildCharOption } from "./buildInformChart";
+const hykinds = [
+  "房地产业",
+  "国内外贸易",
+  "建筑业",
+  "交通运输、仓储和邮政业",
+  "教育、卫生和社会工作",
+  "金融业",
+  "居民服务、修理和其他服务业",
+  "科学研究和技术服务业",
+  "农、林、牧、渔业",
+  "其他服务业",
+  "其他工业",
+  "文化、体育和娱乐业",
+  "鞋材、鞋业",
+  "信息传输、软件和信息技术服务业",
+  "住宿和餐饮业",
+  "装备制造业",
+  "租赁和商务服务业"
+];
 const aroundHash = {
   sport: "娱乐健身",
   store: "便利店",
@@ -280,7 +299,7 @@ export default {
           },
           {
             name: "联系人:",
-            value: `${newVal.xm.substring(0, 1)}**` || "-"
+            value: newVal.xm ? `${newVal.xm.substring(0, 1)}**` : "-"
           },
           {
             name: "联系电话:",
@@ -298,7 +317,8 @@ export default {
         this.eco_tab = [
           {
             title1: "总面积",
-            value1: (newVal._mj ?(newVal._mj / 10000).toFixed(2):"-" )+ " 万m²",
+            value1:
+              (newVal._mj ? (newVal._mj / 10000).toFixed(2) : "-") + " 万m²",
             title2: "员工数",
             value2: newVal.ygs || "-"
           },
@@ -312,7 +332,8 @@ export default {
             title1: "入驻企业数",
             value1: newVal._rzqy || "-",
             title2: "入驻率",
-            value2: (newVal._rzl?((1 - newVal._rzl) * 100).toFixed(2) :"-")+ " %"
+            value2:
+              (newVal._rzl ? ((1 - newVal._rzl) * 100).toFixed(2) : "-") + " %"
           }
         ];
         this.fetchLcxx();
@@ -356,7 +377,7 @@ export default {
               asideList.rentChildren.push(item);
             }
           }
-          if (item.status != "2" && item.hy) {
+          if (item.status != "2" && item.hy && ~hykinds.indexOf(item.hy)) {
             if (!kindHash[item.hy]) {
               kindHash[item.hy] = 0;
             }
@@ -441,8 +462,8 @@ export default {
           const obj = data.filter(item => {
             return item.radius == this.radiusAround.key;
           });
-          const aroundInfo = obj.length ? obj[0] : data[0];
-          delete aroundInfo.radius;
+          const aroundInfo = obj.length ? obj[0] : data[0] || [];
+          // delete aroundInfo.radius;
           this.aroundInfo = aroundInfo;
         });
     },

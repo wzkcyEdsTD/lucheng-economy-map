@@ -21,6 +21,7 @@ import {
   MAPBOXLAYER,
   BUILDAROUND,
   LIGHTBAR_RFEATURE,
+  JJTS,
   LYZS
 } from "@/components/common/Tmap";
 const { server } = WRT_config;
@@ -175,7 +176,7 @@ export default {
           that.fetchBuild({
             name: "buildid",
             val: this.lyItemid,
-            url: LIGHTBAR_RFEATURE
+            url: JJTS + "/2"
           });
 
           // 分块顺序加载白模
@@ -221,7 +222,7 @@ export default {
               that.fetchBuild({
                 name: "buildid",
                 val: features[0].properties.ID,
-                url: LIGHTBAR_RFEATURE
+                url: JJTS + "/2"
               });
             }
           });
@@ -250,18 +251,19 @@ export default {
               _modelList_.push(item);
             }
           } else {
-            value.map(v => {
-              if (!~that.modelList.indexOf(v) && item == v) {
-                that.map.addLayer(
-                  that.createModelLayer(item, [
-                    120.66662090621764,
-                    28.014045855663625,
-                    0
-                  ])
-                );
-                _modelList_.push(item);
-              }
-            });
+            value &&
+              value.map(v => {
+                if (!~that.modelList.indexOf(v) && item == v) {
+                  that.map.addLayer(
+                    that.createModelLayer(item, [
+                      120.66662090621764,
+                      28.014045855663625,
+                      0
+                    ])
+                  );
+                  _modelList_.push(item);
+                }
+              });
           }
         });
         that.modelList = that.modelList.concat(_modelList_);
@@ -712,7 +714,6 @@ export default {
         query.returnGeometry = true;
         queryTask.execute(query).then(response => {
           const geo = that.convertToGeo(response.features);
-
           that.map.flyTo({
             zoom: 16,
             center: that.tempPoint,
@@ -753,68 +754,51 @@ export default {
       return list;
     },
 
-    fetchBuild({ name, val, url = LIGHTBAR_RFEATURE }, fn) {
+    fetchBuild({ name, val, url = JJTS + "/2" }, fn) {
       if (!val) return;
       console.log("entry-fetchBuild");
       const that = this;
       const arr = [0, 0, 0];
       let lyhx = {};
-      loadModules(
-        ["esri/tasks/QueryTask", "esri/tasks/support/Query"],
-        OPTION
-      ).then(([QueryTask, Query]) => {
-        const queryTask = new QueryTask({
-          url
-        });
-        const query = new Query();
-        query.outFields = ["*"];
-        query.where = `${name}='${val}'`;
-        query.returnGeometry = false;
-        queryTask.execute(query).then(response => {
-          if (response.features.length) {
-            that.buildid = response.features[0].attributes.buildid;
-            indexApi
-              .lcxx({ where: `gdid='${that.buildid}'` })
-              .then(({ data }) => {
-                if (!data.length) return;
-                data.map(item => {
-                  if (item.status == "0") {
-                    //入驻企业数
-                    arr[0]++;
-                  } else if (item.status == "2") {
-                    //闲置面积
-                    arr[2] += item.jzmj ? parseFloat(item.jzmj) : 0;
-                  }
-                  //总面积
-                  arr[1] += item.jzmj ? parseFloat(item.jzmj) : 0;
-                });
-                lyhx = data.map(item => {
-                  return {
-                    ...item,
-                    _mj: arr[1],
-                    _rzqy: arr[0],
-                    _rzl: arr[1] && arr[2] ? arr[2] / arr[1] : ""
-                  };
-                });
-                that.$parent.forceBuilding = lyhx[0];
-              });
-            that.changeBuildingDisplay(() => {
-              that.$parent.isAside = +new Date();
-            });
+
+      that.buildid = val;
+      indexApi.lcxx({ where: `gdid='${that.buildid}'` }).then(({ data }) => {
+        if (!data.length) return;
+        data.map(item => {
+          if (item.status == "0") {
+            //入驻企业数
+            arr[0]++;
+          } else if (item.status == "2") {
+            //闲置面积
+            arr[2] += item.jzmj ? parseFloat(item.jzmj) : 0;
           }
+          //总面积
+          arr[1] += item.jzmj ? parseFloat(item.jzmj) : 0;
         });
+        lyhx = data.map(item => {
+          return {
+            ...item,
+            _mj: arr[1],
+            _rzqy: arr[0],
+            _rzl: arr[1] && arr[2] ? arr[2] / arr[1] : ""
+          };
+        });
+        that.$parent.forceBuilding = lyhx[0];
+      });
+      that.changeBuildingDisplay(() => {
+        that.$parent.isAside = +new Date();
       });
     },
     changeBuildingDisplay(fn) {
       const that = this;
       that.$parent.searchbox_display = false;
       that.$parent.buidinform_dispaly = true;
-      that.yylBuilding.map(item => {
-        if (`${that.buildid}` === item.objectid) {
-          that.x = item.x;
-          that.y = item.y;
-        }
-      });
+      // that.yylBuilding.map(item => {
+      //   if (`${that.buildid}` === item.objectid) {
+      //     that.x = item.x;
+      //     that.y = item.y;
+      //   }
+      // });
       //  清除周边缓冲区
       that.closeAround();
       loadModules(
@@ -830,13 +814,17 @@ export default {
         query.returnGeometry = true;
         queryTask.execute(query).then(response => {
           if (response.features.length) {
+            const { x, y } = response.features[0].geometry;
+            const point = [x, y + 0.0025];
             that.map.flyTo({
-              center: [that.x, that.y + 0.0025],
+              center: point,
               zoom: 16.5,
               pitch: 60,
               bearing: 0
             });
-            that.tempPoint = [that.x, that.y + 0.0025];
+            that.tempPoint = point;
+            that.x = x;
+            that.y = y;
             fn && fn();
           }
         });
