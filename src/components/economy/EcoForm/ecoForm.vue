@@ -181,7 +181,7 @@ import {
   xsxfpOption,
   tzjgOption,
   gsylfwyOption,
-  gyydlOption
+  gyydlOption,
 } from "./ecoFormData";
 import ecoFormModal from "./ecoFormModal";
 import ecoecharts from "@/components/common/echarts";
@@ -189,6 +189,8 @@ import echarts from "echarts";
 import geoJson from "@/components/common/lcEcharts/lcData";
 import iSeries from "@/components/common/lcEcharts/lcEcharts.js";
 import jjzbApi from "@/api/beans/u_jjzb";
+
+import jjzbApi_new from "@/api/beans/u_jjzb_new";
 
 import streetecoApi from "@/api/beans/u_streeteco";
 const { indexSeries, landSeries, geoMap } = iSeries;
@@ -218,7 +220,7 @@ export default {
       lists: [
         "规上工业增加值增速",
         "限上批零住餐销售(营业)总额",
-        "限上消费品零售总额"
+        "限上消费品零售总额",
       ],
       listActiveIndex: 0,
       geoMap: geoMap,
@@ -227,16 +229,16 @@ export default {
       filterData: null,
       zstitle: true,
       zetitle: false,
-      tzXAxis: null
+      tzXAxis: null,
     };
   },
   components: {
     ecoFormModal,
-    ecoecharts
+    ecoecharts,
   },
   props: {
     // 嵌入canvass模块左侧栏置顶,在这个页面用于调整字体大小
-    fromCanvass: Boolean
+    fromCanvass: Boolean,
   },
   created() {
     this.getJJZB();
@@ -251,12 +253,12 @@ export default {
     listActiveIndex(newVal, val) {
       const that = this;
 
-      const list = Object.entries(that.streetData).map(item => {
+      const list = Object.entries(that.streetData).map((item) => {
         return { name: item[0], value: item[1] };
       });
 
       that.filterData = list
-        .map(item => {
+        .map((item) => {
           if (item.value == null) {
             item.value = -Infinity;
           }
@@ -265,13 +267,13 @@ export default {
         .sort((a, b) => {
           return b.value - a.value;
         })
-        .map(item => {
+        .map((item) => {
           if (item.value == -Infinity) {
             item.value = "-";
           }
           return item;
         });
-    }
+    },
   },
   methods: {
     initInterval() {
@@ -284,10 +286,11 @@ export default {
     getStreeteco() {
       const that = this;
       streetecoApi.ds().then(({ data }) => {
-        const month = data[0].month;
+        const year = 2020;
+        const month = 3;
         data
-          .filter(item => item.month == month)
-          .map(item => {
+          .filter((item) => item.year == year && item.month == month)
+          .map((item) => {
             that.streetecoData[0][item.name.replace("街道", "")] =
               item.gsgy == "" ? null : Number(item.gsgy);
             that.streetecoData[1][item.name.replace("街道", "")] =
@@ -297,40 +300,40 @@ export default {
           });
 
         let minValue = Object.entries(that.streetecoData[0])
-          .filter(item => item[1] != null)
+          .filter((item) => item[1] != null)
           .reduce((a, b) => (b[1] > a[1] ? b : a))[1];
 
         let maxValue = Object.entries(that.streetecoData[0])
-          .filter(item => item[1] != null)
+          .filter((item) => item[1] != null)
           .reduce((a, b) => (b[1] > a[1] ? a : b))[1];
 
         that.chart.setOption({
           visualMap: {
             min: minValue,
-            max: maxValue
+            max: maxValue,
           },
           series: [
             {
-              data: that.geoMap.map(item => {
+              data: that.geoMap.map((item) => {
                 const name = item.name.replace("街道", "");
                 const indexValue =
                   name != undefined ? that.streetecoData[0][name] : null;
 
                 return {
                   name,
-                  value: [...item.value, indexValue]
+                  value: [...item.value, indexValue],
                 };
-              })
-            }
-          ]
+              }),
+            },
+          ],
         });
 
-        let list = Object.entries(that.streetecoData[0]).map(item => {
+        let list = Object.entries(that.streetecoData[0]).map((item) => {
           return { name: item[0], value: item[1] };
         });
 
         that.filterData = list
-          .map(item => {
+          .map((item) => {
             if (item.value == null) {
               item.value = -Infinity;
             }
@@ -339,7 +342,7 @@ export default {
           .sort((a, b) => {
             return b.value - a.value;
           })
-          .map(item => {
+          .map((item) => {
             if (item.value == -Infinity) {
               item.value = "-";
             }
@@ -349,33 +352,207 @@ export default {
     },
     getJJZB() {
       const that = this;
+
+      jjzbApi_new.ds().then(({ data }) => {
+        const data_lc = data.filter((item) => item.area_code == "330302");
+
+        // GDP 增速
+        const gdpzsApi = data_lc.filter((item) => item.lbdm == "01");
+
+        const gdpzsApi_wz = data.filter(
+          (item) => item.area_code == "330300" && item.lbdm == "01"
+        );
+
+        const gdpzsApiData = that.fixListData([
+          gdpzsApi_wz
+            .sort((a, b) => a.quarter - b.quarter)
+            .sort((a, b) => a.year - b.year),
+          gdpzsApi
+            .sort((a, b) => a.quarter - b.quarter)
+            .sort((a, b) => a.year - b.year),
+        ]);
+
+        that.gdpzsOption.xAxis.data = gdpzsApiData[0];
+        that.gdpzsOption.series[0].data = gdpzsApiData[1];
+        that.gdpzsOption.series[1].data = gdpzsApiData[2];
+
+        // 三次产业
+        const cy1Api = data_lc.filter((item) => item.lbdm == "0201");
+        const cy2Api = data_lc.filter((item) => item.lbdm == "0202");
+        const cy3Api = data_lc.filter((item) => item.lbdm == "0203");
+
+        const cy1ApiData = that.fixListData([
+          cy1Api
+            .sort((a, b) => a.quarter - b.quarter)
+            .sort((a, b) => a.year - b.year),
+          cy2Api
+            .sort((a, b) => a.quarter - b.quarter)
+            .sort((a, b) => a.year - b.year),
+          cy3Api
+            .sort((a, b) => a.quarter - b.quarter)
+            .sort((a, b) => a.year - b.year),
+        ]);
+
+        that.sccyOption.xAxis.data = cy1ApiData[0];
+        that.sccyOption.series[0].data = cy1ApiData[1];
+        that.sccyOption.series[1].data = cy1ApiData[2];
+        that.sccyOption.series[2].data = cy1ApiData[3];
+
+        // 规上工业增速
+        const gsgyApi = data_lc.filter((item) => item.lbdm == "03");
+
+        const gsgyApiData = that.fixData(gsgyApi);
+
+        that.gsgyOption.xAxis.data = gsgyApiData[0];
+        that.gsgyOption.series[0].data = gsgyApiData[1];
+
+        // 限上消费品零售额增速
+        const xsxfpApi = data_lc.filter((item) => item.lbdm == "04");
+
+        const xsxfpApiData = that.fixData(xsxfpApi);
+
+        that.xsxfpOption.xAxis.data = xsxfpApiData[0];
+        that.xsxfpOption.series[0].data = xsxfpApiData[1];
+
+        // 营利性服务业增速
+        const ylfwyApi = data_lc.filter((item) => item.lbdm == "05");
+
+        const ylfwyApiData = that.fixData(ylfwyApi);
+
+        that.gsylfwyOption.xAxis.data = ylfwyApiData[0];
+        that.gsylfwyOption.series[0].data = ylfwyApiData[1];
+
+        // 财政总收入
+        const czzsrApi = data_lc.filter((item) => item.lbdm == "0601");
+        const yssrApi = data_lc.filter((item) => item.lbdm == "0602");
+        const yszcApi = data_lc.filter((item) => item.lbdm == "0603");
+
+        const czzsrApiData = that.fixListData([
+          czzsrApi
+            .sort((a, b) => a.quarter - b.quarter)
+            .sort((a, b) => a.year - b.year),
+          yssrApi
+            .sort((a, b) => a.quarter - b.quarter)
+            .sort((a, b) => a.year - b.year),
+          yszcApi
+            .sort((a, b) => a.quarter - b.quarter)
+            .sort((a, b) => a.year - b.year),
+        ]);
+
+        that.czzsrOption.xAxis.data = czzsrApiData[0];
+        that.czzsrOption.series[0].data = czzsrApiData[1];
+        that.czzsrOption.series[1].data = czzsrApiData[2];
+        that.czzsrOption.series[2].data = czzsrApiData[3];
+
+        // 工业用电量
+        const gyydlApi = data_lc.filter((item) => item.lbdm == "07");
+
+        const gyydlApiData = that.fixData(gyydlApi);
+
+        that.gyydlOption.xAxis.data = gyydlApiData[0];
+        that.gyydlOption.series[0].data = gyydlApiData[1];
+
+        // 商品房销售面积
+        const spfmjApi = data_lc.filter((item) => item.lbdm == "08");
+        const spfmjApi_wz = data.filter(
+          (item) => item.area_code == "330300" && item.lbdm == "08"
+        );
+
+        const spfmjApiData = that.fixListData([
+          spfmjApi_wz
+            .sort((a, b) => a.quarter - b.quarter)
+            .sort((a, b) => a.year - b.year),
+          spfmjApi
+            .sort((a, b) => a.quarter - b.quarter)
+            .sort((a, b) => a.year - b.year),
+        ]);
+
+        that.spfmjOption.xAxis.data = spfmjApiData[0];
+        that.spfmjOption.series[0].data = spfmjApiData[1];
+        that.spfmjOption.series[1].data = spfmjApiData[2];
+
+        // 城乡居民人均收入
+        const czjmApi = data_lc.filter((item) => item.lbdm == "0901");
+        const ncjmApi = data_lc.filter((item) => item.lbdm == "0902");
+
+        const czjmApiData = that.fixListData([
+          czjmApi
+            .sort((a, b) => a.quarter - b.quarter)
+            .sort((a, b) => a.year - b.year),
+          ncjmApi
+            .sort((a, b) => a.quarter - b.quarter)
+            .sort((a, b) => a.year - b.year),
+        ]);
+
+        that.cxjmsrOption.xAxis.data = czjmApiData[0];
+        that.cxjmsrOption.series[0].data = czjmApiData[1];
+        that.cxjmsrOption.series[1].data = czjmApiData[2];
+
+        // 4 + 2 投资增速
+        const mjxmApi = data_lc.filter((item) => item.lbdm == "1001");
+        const gxjsApi = data_lc.filter((item) => item.lbdm == "1004");
+        const gyApi = data_lc.filter((item) => item.lbdm == "1002");
+        const fwyApi = data_lc.filter((item) => item.lbdm == "1006");
+        const sthjApi = data_lc.filter((item) => item.lbdm == "1005");
+        const jtApi = data_lc.filter((item) => item.lbdm == "1003");
+
+        const tzzsApiData = that.fixListData([
+          mjxmApi
+            .sort((a, b) => a.quarter - b.quarter)
+            .sort((a, b) => a.year - b.year),
+          gxjsApi
+            .sort((a, b) => a.quarter - b.quarter)
+            .sort((a, b) => a.year - b.year),
+          gyApi
+            .sort((a, b) => a.quarter - b.quarter)
+            .sort((a, b) => a.year - b.year),
+          fwyApi
+            .sort((a, b) => a.quarter - b.quarter)
+            .sort((a, b) => a.year - b.year),
+          sthjApi
+            .sort((a, b) => a.quarter - b.quarter)
+            .sort((a, b) => a.year - b.year),
+          jtApi
+            .sort((a, b) => a.quarter - b.quarter)
+            .sort((a, b) => a.year - b.year),
+        ]);
+
+        that.tzjgOption.xAxis.data = tzzsApiData[0];
+        that.tzjgOption.series[0].data = tzzsApiData[1];
+        that.tzjgOption.series[1].data = tzzsApiData[2];
+        that.tzjgOption.series[2].data = tzzsApiData[3];
+        that.tzjgOption.series[3].data = tzzsApiData[4];
+        that.tzjgOption.series[4].data = tzzsApiData[5];
+        that.tzjgOption.series[5].data = tzzsApiData[6];
+      });
+
       jjzbApi.ds().then(({ data }) => {
-        const rjgdpApi = data.filter(item => {
+        const rjgdpApi = data.filter((item) => {
           return item.zblb == "人均GDP（元）";
         });
 
         that.rjgdpOption.xAxis.data = that.convertData(rjgdpApi)[0];
         that.rjgdpOption.series[0].data = that.convertData(rjgdpApi)[1];
 
-        const qyldApi = data.filter(item => {
+        const qyldApi = data.filter((item) => {
           return item.zblb == "全员劳动生产率（万元）";
         });
 
         that.qyldOption.xAxis.data = that.convertData(qyldApi)[0];
         that.qyldOption.series[0].data = that.convertData(qyldApi)[1];
 
-        const sssrApi = data.filter(item => {
+        const sssrApi = data.filter((item) => {
           return item.zblb == "税收收入占一般公共预算收入比重（%）";
         });
 
         that.sssrOption.xAxis.data = that.convertData(sssrApi)[0];
         that.sssrOption.series[0].data = that.convertData(sssrApi)[1];
 
-        const ckyeApi = data.filter(item => {
+        const ckyeApi = data.filter((item) => {
           return item.zblb == "金融机构人民币存款余额增速";
         });
 
-        const dkyeApi = data.filter(item => {
+        const dkyeApi = data.filter((item) => {
           return item.zblb == "金融机构人民币贷款余额增速";
         });
 
@@ -383,147 +560,17 @@ export default {
         that.ckdkOption.series[0].data = that.convertData(ckyeApi)[1];
         that.ckdkOption.series[1].data = that.convertData(dkyeApi)[1];
 
-        const czzsrApi = data.filter(item => {
-          return item.zblb == "财政总收入增速";
-        });
-
-        const yssrApi = data.filter(item => {
-          return item.zblb == "一般公共预算收入增速";
-        });
-
-        const yszcApi = data.filter(item => {
-          return item.zblb == "一般公共预算支出增速";
-        });
-
-        that.czzsrOption.xAxis.data = that.convertData(czzsrApi)[0];
-        that.czzsrOption.series[0].data = that.convertData(czzsrApi)[1];
-        that.czzsrOption.series[1].data = that.convertData(yssrApi)[1];
-        that.czzsrOption.series[2].data = that.convertData(yszcApi)[1];
-
-        const gsgyApi = data.filter(item => {
-          return item.zblb == "规上工业增速";
-        });
-
-        that.gsgyOption.xAxis.data = that.convertData(gsgyApi)[0];
-        that.gsgyOption.series[0].data = that.convertData(gsgyApi)[1];
-
-        const cy1Api = data.filter(item => {
-          return item.zblb == "第一产业增速";
-        });
-
-        const cy2Api = data.filter(item => {
-          return item.zblb == "第二产业增速";
-        });
-
-        const cy3Api = data.filter(item => {
-          return item.zblb == "第三产业增速";
-        });
-
-        that.sccyOption.xAxis.data = that.convertData(cy1Api)[0];
-        that.sccyOption.series[0].data = that.convertData(cy1Api)[1];
-        that.sccyOption.series[1].data = that.convertData(cy2Api)[1];
-        that.sccyOption.series[2].data = that.convertData(cy3Api)[1];
-
-        const czjmApi = data.filter(item => {
-          return item.zblb == "城镇常住居民人均可支配收入增速";
-        });
-
-        const ncjmApi = data.filter(item => {
-          return item.zblb == "农村常住居民人均可支配收入增速";
-        });
-
-        that.cxjmsrOption.xAxis.data = that.convertData(czjmApi)[0];
-        that.cxjmsrOption.series[0].data = that.convertData(czjmApi)[1];
-        that.cxjmsrOption.series[1].data = that.convertData(ncjmApi)[1];
-
-        const ylfwyApi = data.filter(item => {
-          return item.zblb == "营利性服务业增速";
-        });
-
-        that.gsylfwyOption.xAxis.data = that.convertData(ylfwyApi)[0];
-        that.gsylfwyOption.series[0].data = that.convertData(ylfwyApi)[1];
-
-        const gdpzsApi = data.filter(item => {
-          return item.zblb == "GDP增速";
-        });
-
-        that.gdpzsOption.xAxis.data = that.convertData(gdpzsApi)[0];
-        that.gdpzsOption.series[0].data = that.convertData(gdpzsApi)[1];
-
-        const ckzeApi = data.filter(item => {
+        const ckzeApi = data.filter((item) => {
           return item.zblb == "出口总额（亿元）";
         });
 
-        const ckzsApi = data.filter(item => {
+        const ckzsApi = data.filter((item) => {
           return item.zblb == "出口总额增速";
         });
 
         that.ckzeOption.xAxis.data = that.convertData(ckzeApi)[0];
         that.ckzeOption.series[0].data = that.convertData(ckzeApi)[1];
         that.ckzeOption.series[1].data = that.convertData(ckzsApi)[1];
-
-        const gyydlApi = data.filter(item => {
-          return item.zblb == "工业用电量增速";
-        });
-
-        that.gyydlOption.xAxis.data = that.convertData(gyydlApi)[0];
-        that.gyydlOption.series[0].data = that.convertData(gyydlApi)[1];
-
-        const spfmjApi = data.filter(item => {
-          return item.zblb == "商品房销售面积增速";
-        });
-
-        that.spfmjOption.xAxis.data = that.convertData(spfmjApi)[0].slice(3, 6);
-        that.spfmjOption.series[0].data = that
-          .convertData(spfmjApi)[1]
-          .slice(3, 6);
-
-        const xsxfpApi = data.filter(item => {
-          return item.zblb == "限上消费品零售额增速";
-        });
-
-        that.xsxfpOption.xAxis.data = that.convertData(xsxfpApi)[0];
-        that.xsxfpOption.series[0].data = that.convertData(xsxfpApi)[1];
-
-        const mjxmApi = data.filter(item => {
-          return item.zblb == "民间项目投资增速";
-        });
-        const gxjsApi = data.filter(item => {
-          return item.zblb == "高新技术产业投资增速";
-        });
-        const gyApi = data.filter(item => {
-          return item.zblb == "工业投资增速";
-        });
-        const fwyApi = data.filter(item => {
-          return item.zblb == "服务业投资增速";
-        });
-        const sthjApi = data.filter(item => {
-          return item.zblb == "生态环境和公共设施投资增速";
-        });
-        const jtApi = data.filter(item => {
-          return item.zblb == "交通投资增速";
-        });
-
-        that.tzXAxis = [
-          [...mjxmApi],
-          [...gxjsApi],
-          [...gyApi],
-          [...fwyApi],
-          [...sthjApi],
-          [...jtApi]
-        ].reduce((a, b) => {
-          if (a.length && b.length) {
-            return b.length > a.length ? b : a;
-          }
-        });
-
-        that.tzjgOption.xAxis.data = that.convertData(that.tzXAxis)[0];
-        that.tzjgOption.series[0].data = that.getTZJG(mjxmApi);
-        that.tzjgOption.series[1].data = that.getTZJG(gxjsApi);
-        that.tzjgOption.series[2].data = that.getTZJG(gyApi);
-        that.tzjgOption.series[3].data = that.getTZJG(fwyApi);
-        that.tzjgOption.series[4].data = that.getTZJG(sthjApi);
-        that.tzjgOption.series[5].data = that.getTZJG(jtApi);
       });
     },
     convertData(api) {
@@ -532,23 +579,106 @@ export default {
         1: "\n一季度",
         2: "\n上半年",
         3: "\n前三季度",
-        4: "\n全年"
+        4: "\n全年",
       };
 
       let res = [[], []];
-      data.map(item => {
+      data.map((item) => {
         res[0].push(item.year + seasonMap[item.season]);
         res[1].push(Number(item.zbz).toFixed(1));
       });
 
       return res;
     },
+
+    fixData(api) {
+      let data = api;
+      const quarterMap = {
+        1: "\n一季度",
+        2: "\n上半年",
+        3: "\n前三季度",
+        4: "\n全年",
+      };
+
+      const res = [[], []];
+      data
+        .sort((a, b) => a.quarter - b.quarter)
+        .sort((a, b) => a.year - b.year)
+        .map((item) => {
+          res[0].push(item.year + quarterMap[item.quarter]);
+          res[1].push(Number(item.value).toFixed(1));
+        });
+
+      if (res[0].length > 6) {
+        const len = res[0].length;
+        res.map((item, index) => {
+          res[index] = item.splice(len - 6, len);
+        });
+      }
+
+      return res;
+    },
+
+    fixListData(apiList) {
+      const data = apiList;
+      const quarterMap = {
+        1: "\n一季度",
+        2: "\n上半年",
+        3: "\n前三季度",
+        4: "\n全年",
+      };
+      
+      const times = [];
+
+      data.map((item) => {
+        item.map((_item) => {
+          times.push(Number(_item.year) * 10 + Number(_item.quarter));
+        });
+      });
+
+      let timesFix = [...new Set(times)];
+
+      timesFix = timesFix
+        .sort((a, b) => b - a)
+        .slice(0, 6)
+        .sort((a, b) => a - b);
+
+      const res = [[]];
+
+      timesFix.map((item) => {
+        res[0].push(parseInt(item / 10) + quarterMap[item % 10]);
+      });
+
+      for (let i of data) {
+        res.push([]);
+      }
+
+      data.map((item, index) => {
+        const itemTimes = item.map(
+          (_item) => Number(_item.year) * 10 + Number(_item.quarter)
+        );
+
+        const itemVals = item.map((_item) => _item.value);
+
+        timesFix.map((oitem, oindex) => {
+          if (~itemTimes.indexOf(oitem)) {
+            const i = itemTimes.indexOf(oitem);
+            res[index + 1].push(itemVals[i].toFixed(1));
+          } else {
+            res[index + 1].push("-");
+          }
+        });
+      });
+
+      return res;
+    },
+
     // 投资结构
     getTZJG(data) {
       let copy = [];
 
       this.tzXAxis.map((item, index) => {
-        data.map(_item => {
+        data.map((_item) => {
           if (item.year == _item.year && item.season == _item.season) {
             copy.push(_item.zbz);
           }
@@ -570,9 +700,9 @@ export default {
         // 悬停
         tooltip: {
           trigger: "item",
-          formatter: function(params) {
+          formatter: function (params) {
             return params.name;
-          }
+          },
         },
         visualMap: {
           type: "continuous",
@@ -584,12 +714,12 @@ export default {
           text: ["高", "低"],
           itemHeight: 150,
           inRange: {
-            color: ["#6FCF6A", "#f3a444", "#892a2f"]
+            color: ["#6FCF6A", "#f3a444", "#892a2f"],
           },
           seriesIndex: 0,
           textStyle: {
-            color: "#FFF"
-          }
+            color: "#FFF",
+          },
         },
         geo: [
           {
@@ -599,21 +729,21 @@ export default {
             zlevel: 2,
             label: {
               normal: {
-                show: false
+                show: false,
               },
               emphasis: {
-                show: false
-              }
+                show: false,
+              },
             },
             itemStyle: {
               // 普通样式
               normal: {
                 areaColor: "#DCDCDC",
                 borderColor: "#71b2d4",
-                borderWidth: 5
-              }
+                borderWidth: 5,
+              },
             },
-            silent: true
+            silent: true,
           },
           {
             map: "LC",
@@ -623,32 +753,32 @@ export default {
             zlevel: 1,
             label: {
               normal: {
-                show: false
+                show: false,
               },
               emphasis: {
-                show: false
-              }
+                show: false,
+              },
             },
             itemStyle: {
               // 普通样式
               normal: {
                 areaColor: "#327bbf",
-                borderWidth: 0
-              }
+                borderWidth: 0,
+              },
             },
-            silent: true
-          }
+            silent: true,
+          },
         ],
-        series: indexSeries
+        series: indexSeries,
       });
 
-      that.chart.on("click", function(e) {
+      that.chart.on("click", function (e) {
         //that.shallEcoModal = true;
         that.$parent.FormJump();
         //console.log(e.componentSubType); //此处写点击事件内容
       });
       //根据窗口的大小变动图表
-      window.onresize = function() {
+      window.onresize = function () {
         that.chart.resize();
       };
     },
@@ -660,11 +790,11 @@ export default {
       exp = that.streetecoData[i];
 
       let minValue = Object.entries(exp)
-        .filter(item => item[1] != null)
+        .filter((item) => item[1] != null)
         .reduce((a, b) => (b[1] > a[1] ? b : a))[1];
 
       let maxValue = Object.entries(exp)
-        .filter(item => item[1] != null)
+        .filter((item) => item[1] != null)
         .reduce((a, b) => (b[1] > a[1] ? a : b))[1];
 
       if (i == 0) {
@@ -680,24 +810,24 @@ export default {
       that.chart.setOption({
         visualMap: {
           min: minValue,
-          max: maxValue
+          max: maxValue,
         },
         series: [
           {
-            data: that.geoMap.map(item => {
+            data: that.geoMap.map((item) => {
               const name = item.name.replace("街道", "");
               const indexValue = name != undefined ? exp[name] : null;
 
               return {
                 name,
-                value: [...item.value, indexValue]
+                value: [...item.value, indexValue],
               };
-            })
-          }
-        ]
+            }),
+          },
+        ],
       });
-    }
-  }
+    },
+  },
 };
 </script>
  <style scoped lang="less">

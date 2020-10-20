@@ -1,29 +1,6 @@
 import echarts from "echarts";
-import axios from "axios";
-
-// $.ajax({
-//   url: "http://59.202.38.250/api/open/data/UC_QUERY_WENZHOU_LUCHENG_YBGGYSSR?token=402881756126e2ea016126e2eab60000",
-//   type: "GET",
-//   dataType: "jsonp",
-//   success: function (data) {
-//     console.log(data)
-//   }
-// })
-
-// axios.get(`http://59.202.38.250/api/open/data/UC_QUERY_WENZHOU_LUCHENG_YBGGYSSR?token=402881756126e2ea016126e2eab60000`)
-//   .then((response) => {
-//     console.log(response)
-//   })
 
 // 无图例的图表
-// const baseGrid_NoLegend = {
-//   left: "1%",
-//   right: "8%",
-//   top: "20%",
-//   bottom: "0%",
-//   containLabel: true
-// };
-
 const baseGrid_NoLegend = {
   left: "1%",
   right: "8%",
@@ -33,14 +10,6 @@ const baseGrid_NoLegend = {
 };
 
 // 有图例的图表
-// const baseGrid = {
-//   left: "1%",
-//   right: "8%",
-//   top: "30%",
-//   bottom: "0%",
-//   containLabel: true
-// };
-
 const baseGrid = {
   left: "1%",
   right: "8%",
@@ -91,9 +60,12 @@ const {
     alignWithLabel: true
   },
   axisLabelX: {
-    interval: (index, text) => {
-      return text.match(new RegExp(/(上半年|全年)/));
+    interval: (index, value) => {
+      return (index % 2) == 1
     }
+    // interval: (index, text) => {
+    //   return text.match(new RegExp(/(上半年|全年)/));
+    // }
   },
   axisLineX: {
     show: true,
@@ -120,8 +92,17 @@ const {
 // GDP增速
 export const gdpzsOption = {
   // title: getTitle("GDP增速"),
-  grid: baseGrid_NoLegend,
+  grid: baseGrid,
   tooltip: tooltip1,
+  legend: {
+    show: true,
+    left: "center",
+    top: "2%",
+    textStyle: {
+      color: "#FFF"
+    },
+    data: ["温州", "鹿城"]
+  },
   xAxis: {
     type: "category",
     boundaryGap: false,
@@ -140,6 +121,33 @@ export const gdpzsOption = {
     splitLine: splitLineY
   },
   series: [{
+    name: "温州",
+    type: "line",
+    symbol: "circle",
+    symbolSize: 8,
+    itemStyle: {
+      normal: {
+        color: "rgb(245, 255, 50)",
+        lineStyle: {
+          color: "rgb(245, 255, 50)",
+          width: 1
+        },
+        areaStyle: {
+          color: new echarts.graphic.LinearGradient(0, 1, 0, 0, [{
+              offset: 0,
+              color: "rgba(7,44,90,0.3)"
+            },
+            {
+              offset: 1,
+              color: "rgba(0,146,246,0.9)"
+            }
+          ])
+        }
+      }
+    },
+    data: []
+  }, {
+    name: "鹿城",
     type: "line",
     symbol: "circle",
     symbolSize: 8,
@@ -340,7 +348,7 @@ export const sssrOption = {
   xAxis: {
     type: "category",
     axisTick: axisTickX,
-    axisLabel: axisLabelX,
+    axisLabel: {},
     axisLine: axisLineX,
     splitLine: splitLineX,
     data: []
@@ -580,7 +588,7 @@ export const qyldOption = {
   xAxis: {
     type: "category",
     axisTick: axisTickX,
-    axisLabel: axisLabelX,
+    axisLabel: {},
     axisLine: axisLineX,
     splitLine: splitLineX,
     data: []
@@ -1034,13 +1042,22 @@ export const gyydlOption = {
 // 商品房销售面积增速
 export const spfmjOption = {
   // title: getTitle("商品房销售面积增速"),
-  grid: baseGrid_NoLegend,
+  grid: baseGrid,
   tooltip: tooltip1,
+  legend: {
+    show: true,
+    left: "center",
+    top: "2%",
+    textStyle: {
+      color: "#FFF"
+    },
+    data: ["温州", "鹿城"]
+  },
   xAxis: {
     type: "category",
     boundaryGap: false,
     axisTick: axisTickX,
-    axisLabel: {},
+    axisLabel: axisLabelX,
     axisLine: axisLineX,
     splitLine: splitLineX,
     data: []
@@ -1054,12 +1071,39 @@ export const spfmjOption = {
     splitLine: splitLineY
   },
   series: [{
+    name: "温州",
     type: "line",
     symbol: "circle",
     symbolSize: 8,
     itemStyle: {
       normal: {
-        color: "#FFF",
+        color: "#00FA9A",
+        lineStyle: {
+          color: "#00FA9A",
+          width: 1
+        }
+      }
+    },
+    areaStyle: {
+      color: new echarts.graphic.LinearGradient(0, 1, 0, 0, [{
+          offset: 0,
+          color: "rgba(7, 44, 90, 0.3)"
+        },
+        {
+          offset: 1,
+          color: "#00FA9A"
+        }
+      ])
+    },
+    data: []
+  }, {
+    name: "鹿城",
+    type: "line",
+    symbol: "circle",
+    symbolSize: 8,
+    itemStyle: {
+      normal: {
+        color: "#83bff6",
         lineStyle: {
           color: "#83bff6",
           width: 1
@@ -1089,7 +1133,7 @@ export const rjgdpOption = {
   xAxis: {
     type: "category",
     axisTick: axisTickX,
-    axisLabel: axisLabelX,
+    axisLabel: {},
     axisLine: axisLineX,
     splitLine: splitLineX,
     data: []
