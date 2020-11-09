@@ -92,6 +92,203 @@ async function pjzb(_option = {}) {
   };
   return await axios.post("/dw/ds", option);
 }
+async function pjzb_count(_option = {}) {
+  const axios = getDefaultAxios();
+  const option = {
+    module: "dwbean",
+    action: "001",
+    count: 30,
+    res: "testsql_all",
+    ds: {
+      buffers: [],
+      tables: [
+        {
+          alias: "a",
+          orm: "",
+          name: `u_ydpjb`,
+          updateflag: 1
+        }
+      ],
+      cols: [
+        { name: "lx", raw: "a.lx" },
+        { name: "sumNum", raw: "count(lx)" }
+      ],
+      module: "testsql_all",
+      where: "",
+      wherejson: "",
+      linkwhere: "",
+      order: "",
+      groupby: "a.lx",
+      having: "",
+      distinct: false,
+      rowlimit: 0,
+      childs: [],
+      page: {},
+      params: [],
+      control: {},
+      ..._option
+    }
+  };
+  return await axios.post("/dw/ds", option);
+}
+async function pjzb_xyfx(_option = {}) {
+  const axios = getDefaultAxios();
+  const option = {
+    module: "dwbean",
+    action: "001",
+    count: 30,
+    res: "testsql_all",
+    ds: {
+      buffers: [],
+      tables: [
+        {
+          alias: "a",
+          orm: "",
+          name: `(SELECT name,case when  CAST(mjss AS DECIMAL(9,4)) < 5.0 then '待提高'when (CAST(mjss AS DECIMAL(9,4)) >= 5.0  and CAST(mjss AS DECIMAL(9,4)) < 15.0) then '一般' when (CAST(mjss AS DECIMAL(9,4)) >= 15.0  and CAST(mjss AS DECIMAL(9,4)) < 30.0) then '良好' when (CAST(mjss AS DECIMAL(9,4)) >= 30.0  and CAST(mjss AS DECIMAL(9,4)) < 100.0)  then '优秀' when CAST(mjss AS DECIMAL(9,4)) >= 100.0 then '极优' end as kind from u_ydpjb )`,
+          updateflag: 1
+        }
+      ],
+      cols: [
+        { name: "jia", raw: "count(a.name)" },
+        { name: "kind", raw: "a.kind" }
+      ],
+      module: "testsql_all",
+      where: "",
+      wherejson: "",
+      linkwhere: "",
+      order: "",
+      groupby: "a.kind",
+      having: "",
+      distinct: false,
+      rowlimit: 0,
+      childs: [],
+      page: {},
+      params: [],
+      control: {},
+      ..._option
+    }
+  };
+  return await axios.post("/dw/ds", option);
+}
+async function pjzb_sspm(_option = {}) {
+  const axios = getDefaultAxios();
+  const option = {
+    module: "dwbean",
+    action: "001",
+    count: 30,
+    res: "testsql_all",
+    ds: {
+      buffers: [],
+      tables: [
+        {
+          alias: "a",
+          orm: "",
+          name: `u_ydpjb`,
+          updateflag: 1
+        }
+      ],
+      cols: [
+        { name: "ssjd", raw: "a.ssjd" },
+        { name: "mjss", raw: "sum(CAST(mjss AS DECIMAL(9,4)))" },
+        { name: "qysl", raw: "count(name)" }
+      ],
+      module: "testsql_all",
+      where: "",
+      wherejson: "",
+      linkwhere: "",
+      order: "mjss desc",
+      groupby: "a.ssjd",
+      having: "",
+      distinct: false,
+      rowlimit: 0,
+      childs: [],
+      page: {},
+      params: [],
+      control: {},
+      ..._option
+    }
+  };
+  return await axios.post("/dw/ds", option);
+}
+async function pjzb_hysl(_option = {}) {
+  const axios = getDefaultAxios();
+  const option = {
+    module: "dwbean",
+    action: "001",
+    count: 30,
+    res: "testsql_all",
+    ds: {
+      buffers: [],
+      tables: [
+        {
+          alias: "a",
+          orm: "",
+          name: `u_ydpjb`,
+          updateflag: 1
+        }
+      ],
+      cols: [
+        { name: "hylx", raw: "a.hylx" },
+        { name: "sumNum", raw: "count(hylx)" }
+      ],
+      module: "testsql_all",
+      where: "",
+      wherejson: "",
+      linkwhere: "",
+      order: "",
+      groupby: "a.hylx",
+      having: "",
+      distinct: false,
+      rowlimit: 0,
+      childs: [],
+      page: {},
+      params: [],
+      control: {},
+      ..._option
+    }
+  };
+  return await axios.post("/dw/ds", option);
+}
+async function pjzb_pjjg(_option = {}) {
+  const axios = getDefaultAxios();
+  const option = {
+    module: "dwbean",
+    action: "001",
+    count: 30,
+    res: "testsql_all",
+    ds: {
+      buffers: [],
+      tables: [
+        {
+          alias: "a",
+          orm: "",
+          name: `u_ydpjb`,
+          updateflag: 1
+        }
+      ],
+      cols: [
+        { name: "ssjd", raw: "a.ssjd" },
+        { name: "dc", raw: "a.dc" },
+        { name: "sumNum", raw: "count(dc)" }
+      ],
+      module: "testsql_all",
+      where: "",
+      wherejson: "",
+      linkwhere: "",
+      order: "a.ssjd",
+      groupby: "a.dc,a.ssjd",
+      having: "",
+      distinct: false,
+      rowlimit: 0,
+      childs: [],
+      page: {},
+      params: [],
+      control: {},
+      ..._option
+    }
+  };
+  return await axios.post("/dw/ds", option);
+}
 async function ydxx({ uuid }) {
   const axios = getDefaultAxios();
   const option = {
@@ -133,6 +330,11 @@ async function ydxx({ uuid }) {
 const api = {
   ds,
   pjzb,
+  pjzb_count,
+  pjzb_xyfx,
+  pjzb_sspm,
+  pjzb_hysl,
+  pjzb_pjjg,
   ydxx
 };
 

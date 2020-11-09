@@ -23,6 +23,7 @@ export default {
       handler(newVal, val) {
         this.chart && this.chart.setOption(newVal);
       },
+      immediate:true,
       deep: true
     }
   },
@@ -43,6 +44,10 @@ export default {
       /*window.addEventListener("resize", function() {
         chart.resize();
       });*/
+    },
+    changeEcharts(id,option){
+      this.chart = echarts.init(document.getElementById(id));
+      this.chart && option && this.chart.setOption(option);
     }
   }
 };

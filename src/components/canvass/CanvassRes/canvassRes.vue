@@ -132,12 +132,12 @@ export default {
           check: false,
           show: true,
           children: [
-            {
-              name: "规划地块",
-              id: "allLandRegulatory",
-              fun: "addAllLandRegulatory",
-              check: false
-            },
+            // {
+            //   name: "规划地块",
+            //   id: "allLandRegulatory",
+            //   fun: "addAllLandRegulatory",
+            //   check: false
+            // },
             {
               name: "可供地块",
               id: "landAva",

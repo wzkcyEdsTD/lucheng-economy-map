@@ -96,7 +96,7 @@ export const streetCharOption = {
 //  参评企业数
 export const cp1Option = {
   title: {
-    text: "共667家",
+    text: "共1631家",
     textStyle: {
       color: "#fff",
       fontSize: 20,
@@ -156,10 +156,10 @@ export const cp1Option = {
     },
     data: [{
       name: "规上企业",
-      value: 222
+      value: 259
     }, {
       name: "规下企业",
-      value: 445
+      value: 1373
     }]
   }]
 };
@@ -324,7 +324,7 @@ export const mjssOption = {
     barWidth: 20,
     barGap: "0%",
     barCategoryGap: "10%",
-    data: [48, 184, 198, 177, 60]
+    data: []
   }]
 };
 
@@ -345,7 +345,7 @@ export const hy1Option = {
     containLabel: true
   },
   xAxis: {
-    data: ["鞋业鞋材", "制造业", "其他"], //横坐标
+    data: [], //横坐标
     axisTick: {
       show: false
     },
@@ -391,7 +391,7 @@ export const hy1Option = {
     name: "数量",
     type: "bar",
     barWidth: 30,
-    data: [128, 43, 51], //数据
+    data: [], //数据
     itemStyle: {
       normal: {
         color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
@@ -467,15 +467,6 @@ export const jdOption = {
       show: false
     },
     data: [
-      "南汇",
-      "滨江",
-      "山福镇",
-      "双屿",
-      "藤桥镇",
-      "仰义",
-      "南郊",
-      "轻工业产业园区",
-      "丰门"
     ]
   }],
   xAxis: [{
@@ -512,7 +503,7 @@ export const jdOption = {
           }
         }
       },
-      data: [0, 1, 4, 3, 3, 12, 13, 15, 24]
+      data: []
     },
     {
       name: "B类",
@@ -533,7 +524,7 @@ export const jdOption = {
           }
         }
       },
-      data: [1, 0, 1, 8, 4, 14, 10, 8, 37]
+      data: []
     },
     {
       name: "C类",
@@ -554,7 +545,7 @@ export const jdOption = {
           }
         }
       },
-      data: [0, 1, 3, 7, 3, 9, 3, 11, 18]
+      data: []
     },
     {
       name: "D类",
@@ -575,12 +566,13 @@ export const jdOption = {
           }
         }
       },
-      data: [0, 0, 1, 1, 0, 0, 0, 4, 3]
+      data: []
     }
   ]
 };
 
 //  街镇亩均税收
+//  鹿城亩税直接给的数据
 export const streetRank = {
   title: {
     // text: '2016年12月长宁区合规成本分析'
@@ -609,13 +601,13 @@ export const streetRank = {
         fontSize: 14,
         color: "#E3EEF1"
       },
-      rotate: -30,
-      margin: 20,
-      align: "center"
-      // formatter: function (value) {
-      //   return value.split("").join("\n");
-      // }
-      //interval: 0
+      //rotate: 15,
+      margin: 10,
+      align: "center",
+      formatter: function (value) {
+        return value.split("").join("\n");
+      },
+      interval: 0
     },
     axisLine: {
       lineStyle: {
@@ -626,17 +618,7 @@ export const streetRank = {
     axisTick: {
       show: false
     },
-    data: [
-      "南郊",
-      "仰义",
-      "滨江",
-      "丰门",
-      "双屿",
-      "山福镇",
-      "轻工园",
-      "藤桥镇",
-      "南汇"
-    ]
+    data: ["滨江","南郊","丰门","山福","蒲鞋市","双屿","松台","仰义","藤桥","广化","七都"]
   }],
   yAxis: [{
     name: "万元/亩",
@@ -647,7 +629,7 @@ export const streetRank = {
     axisLabel: {
       formatter: "{value}",
       color: "#FFF",
-      fontSize: 16
+      fontSize: 14
     },
     axisLine: {
       lineStyle: {
@@ -665,7 +647,7 @@ export const streetRank = {
     name: "亩均税收",
     type: "bar",
     barWidth: 24, //柱子宽度
-    barGap: 1, //柱子之间间距
+    barGap: 2, //柱子之间间距
     itemStyle: {
       normal: {
         color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
@@ -679,6 +661,6 @@ export const streetRank = {
         ])
       }
     },
-    data: [85.78, 75.18, 74.03, 71.53, 52.91, 43.02, 29.62, 28.52, 24.63]
+    data: [53.31,48.24,47.64,38.24,36.77,33.16,29.93,28.44,26.38,16.06,9.44]
   }]
 };
