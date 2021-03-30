@@ -4,7 +4,7 @@
     <ul>
       <head>
         <img :src="`${server}/icon/topicsIcon/优质企业.png`" />
-        2018年度鹿城区{{this.$props.Title}}
+        2020年度鹿城区{{this.$props.Title}}
         <i class="iconfont iconRectangleCopy" @click="leftclose(false)"></i>
       </head>
       <li v-for="(item,index,key) in data" :key="key">
