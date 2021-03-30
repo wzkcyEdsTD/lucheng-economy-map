@@ -218,7 +218,7 @@ export default {
           ]
         },
         {
-          label: "2018年度鹿城工作先进单位",
+          label: "2020年度鹿城工作先进单位",
           check: true,
           disabled: true,
           show: true,
