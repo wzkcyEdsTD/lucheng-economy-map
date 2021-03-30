@@ -669,7 +669,8 @@ export default {
             const canvassArea = new MapImageLayer({
               url: ZSZY,
               id: "canvassArea",
-              sublayers: [{ id: 3 }, { id: 2 }]
+              // sublayers: [{ id: 3 }, { id: 2 }]
+              sublayers: [{ id: 3 }]
             });
             that.map.add(canvassArea, 2);
             const canvassPoint = new MapImageLayer({
