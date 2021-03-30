@@ -61,7 +61,8 @@
               <thead>
                 <tr>
                   <th>街道</th>
-                  <th v-if="zetitle">总额</th>
+                  <!-- <th v-if="zetitle">总额</th> -->
+                  <th v-if="zetitle">增速</th>
                   <th v-if="zstitle">增速</th>
                 </tr>
               </thead>
@@ -219,8 +220,8 @@ export default {
       shallEcoModal: false,
       lists: [
         "规上工业增加值增速",
-        "限上批零住餐销售(营业)总额",
-        "限上消费品零售总额",
+        "限上批零住餐销售(营业)增速",
+        "限上消费品零售增速",
       ],
       listActiveIndex: 0,
       geoMap: geoMap,
