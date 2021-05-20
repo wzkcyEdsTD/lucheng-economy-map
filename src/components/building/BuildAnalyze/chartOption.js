@@ -57,8 +57,7 @@ export const zsOption = {
     ]
   },
 
-  series: [
-    {
+  series: [{
       type: "pie",
       clockwise: false, //饼图的扇区是否是顺时针排布
       minAngle: 2, //最小的扇区角度（0 ~ 360）
@@ -91,22 +90,17 @@ export const ecoOption = {
   tooltip: {
     show: true,
   },
-  grid: [
-    {
-      //  width: "49%",
-      left: "1%",
-      top: "0",
-      right: "0",
-      bottom: "0"
-    }
-  ],
-  xAxis: [
-    {
-      show: false
-    }
-  ],
-  yAxis: [
-    {
+  grid: [{
+    //  width: "49%",
+    left: "1%",
+    top: "0",
+    right: "0",
+    bottom: "0"
+  }],
+  xAxis: [{
+    show: false
+  }],
+  yAxis: [{
       splitLine: "none",
       axisTick: "none",
       axisLine: "none",
@@ -125,7 +119,7 @@ export const ecoOption = {
       splitLine: "none",
       axisTick: "none",
       axisLine: "none",
-      data: [16, 4, 8, 6],
+      data: [7, 3, 5, 12],
       axisLabel: {
         show: true,
         verticalAlign: "bottom",
@@ -135,7 +129,7 @@ export const ecoOption = {
           color: "#fff",
           fontSize: "12"
         },
-        formatter: function(value) {
+        formatter: function (value) {
           return value + "幢";
         },
         rich: {
@@ -150,10 +144,9 @@ export const ecoOption = {
       }
     }
   ],
-  series: [
-    {
+  series: [{
       type: "bar",
-      data: [16, 4, 8, 6],
+      data: [7, 3, 5, 12],
       barWidth: 15,
       itemStyle: {
         normal: {
@@ -162,8 +155,7 @@ export const ecoOption = {
             0,
             1,
             0,
-            [
-              {
+            [{
                 offset: 0,
                 color: "rgba(17,154,255,1)" // 0% 处的颜色
               },
@@ -190,7 +182,7 @@ export const ecoOption = {
       //     return "";
       //   }
       // },
-      silent : true,
+      silent: true,
       itemStyle: {
         normal: {
           color: "rgba(41,65,95,1)",
@@ -229,35 +221,32 @@ export const jdOption = {
       "规上服务业(家)"
     ]
   },
-  xAxis: [
-    {
-      boundaryGap: true,
-      axisLabel: {
-        color: "#29DAFF",
-        interval: 0,
-        rotate: -30,
-      },
-      axisLine: {
-        show: true,
-        lineStyle: {
-          color: "#397cbc"
-        }
-      },
-      axisTick: {
-        show: true
-      },
-      splitLine: {
-        show: true,
-        lineStyle: {
-          color: "#1F5B88",
-          width: 3
-        }
-      },
-      data: []
-    }
-  ],
-  yAxis: [
-    {
+  xAxis: [{
+    boundaryGap: true,
+    axisLabel: {
+      color: "#29DAFF",
+      interval: 0,
+      rotate: -30,
+    },
+    axisLine: {
+      show: true,
+      lineStyle: {
+        color: "#397cbc"
+      }
+    },
+    axisTick: {
+      show: true
+    },
+    splitLine: {
+      show: true,
+      lineStyle: {
+        color: "#1F5B88",
+        width: 3
+      }
+    },
+    data: []
+  }],
+  yAxis: [{
       name: "入驻企业数(家)",
       type: "value",
       min: 0,
@@ -312,15 +301,14 @@ export const jdOption = {
       }
     }
   ],
-  series: [
-    {
+  series: [{
       name: "入驻企业数(家)",
       type: "bar",
       itemStyle: {
         normal: {
           color: '#14b1eb',
           opacity: .7
-      }
+        }
       },
       data: [],
     },
@@ -330,7 +318,7 @@ export const jdOption = {
       stack: "总量",
       symbol: "circle",
       symbolSize: 8,
-      yAxisIndex:1,
+      yAxisIndex: 1,
       itemStyle: {
         normal: {
           color: "#FFEB33",
@@ -340,20 +328,20 @@ export const jdOption = {
           }
         }
       }
-          // areaStyle: {
-          //   //color: '#94C9EC'
-          //   color: new echarts_1.graphic.LinearGradient(0, 0, 0, 1, [
-          //     {
-          //       offset: 0,
-          //       color: "rgba(41,171,255,1)"
-          //     },
-          //     {
-          //       offset: 1,
-          //       color: "rgba(41,218,255,0.2)"
-          //     }
-          //   ])
-          // }
-        ,
+      // areaStyle: {
+      //   //color: '#94C9EC'
+      //   color: new echarts_1.graphic.LinearGradient(0, 0, 0, 1, [
+      //     {
+      //       offset: 0,
+      //       color: "rgba(41,171,255,1)"
+      //     },
+      //     {
+      //       offset: 1,
+      //       color: "rgba(41,218,255,0.2)"
+      //     }
+      //   ])
+      // }
+      ,
       markPoint: {
         itemStyle: {
           normal: {
@@ -393,10 +381,14 @@ export const slOption = {
     containLabel: true
   },
   yAxis: {
-    data: ["南汇:", "松台:", "大南:", "广化:", "五马:", "滨江:", "南郊:"],
+    data: ["南汇:", "滨江:", "五马:", "南郊:", "松台:", "大南:", "蒲鞋市:", "广化:", "双屿:"],
     inverse: true,
-    axisLine: { show: false },
-    axisTick: { show: false },
+    axisLine: {
+      show: false
+    },
+    axisTick: {
+      show: false
+    },
     axisLabel: {
       margin: 30,
       textStyle: {
@@ -412,64 +404,82 @@ export const slOption = {
     }
   },
   xAxis: {
-    splitLine: { show: false },
-    axisLabel: { show: false },
-    axisTick: { show: false },
-    axisLine: { show: false }
-  },
-  series: [
-    {
-      type: "pictorialBar",
-      label: labelSetting,
-      // symbolSize: ['100%', '80%'],
-      symbolOffset: [30, 0],
-      symbolPosition: "start",
-      barCategoryGap: "40%",
-      data: [
-        {
-          value: 12,
-          symbolRepeat: true,
-          symbol: spirit2,
-          symbolSize: ["120%", "70%"]
-        },
-        {
-          value: 6,
-          symbolRepeat: true,
-          symbol: spirit2,
-          symbolSize: ["140%", "80%"]
-        },
-        {
-          value: 6,
-          symbolRepeat: true,
-          symbol: spirit2,
-          symbolSize: ["140%", "80%"]
-        },
-        {
-          value: 2,
-          symbolRepeat: true,
-          symbol: spirit2,
-          symbolSize: ["150%", "100%"]
-        },
-        {
-          value: 2,
-          symbolRepeat: true,
-          symbol: spirit2,
-          symbolSize: ["150%", "100%"]
-        },
-        {
-          value: 5,
-          symbolRepeat: true,
-          symbol: spirit2,
-          symbolSize: ["140%", "90%"]
-        },
-        {
-          value: 1,
-          symbol: spirit2,
-          symbolSize: ["100%", "100%"]
-        }
-      ]
+    splitLine: {
+      show: false
+    },
+    axisLabel: {
+      show: false
+    },
+    axisTick: {
+      show: false
+    },
+    axisLine: {
+      show: false
     }
-  ]
+  },
+  series: [{
+    type: "pictorialBar",
+    label: labelSetting,
+    // symbolSize: ['100%', '80%'],
+    symbolOffset: [30, 0],
+    symbolPosition: "start",
+    barCategoryGap: "40%",
+    data: [{
+        value: 23,
+        symbolRepeat: true,
+        symbol: spirit2,
+        symbolSize: ["60%", "70%"]
+      },
+      {
+        value: 21,
+        symbolRepeat: true,
+        symbol: spirit2,
+        symbolSize: ["90%", "80%"]
+      },
+      {
+        value: 8,
+        symbolRepeat: true,
+        symbol: spirit2,
+        symbolSize: ["80%", "80%"]
+      },
+      {
+        value: 5,
+        symbolRepeat: true,
+        symbol: spirit2,
+        symbolSize: ["80%", "80%"]
+      },
+      {
+        value: 4,
+        symbolRepeat: true,
+        symbol: spirit2,
+        symbolSize: ["100%", "80%"]
+      },
+      {
+        value: 3,
+        symbolRepeat: true,
+        symbol: spirit2,
+        symbolSize: ["100%", "80%"]
+      },
+      {
+        value: 3,
+        symbolRepeat: true,
+        symbol: spirit2,
+        symbolSize: ["100%", "90%"]
+      },
+      {
+        value: 1,
+        symbolRepeat: true,
+        symbol: spirit2,
+        symbolSize: ["100%", "100%"]
+      },
+      {
+        value: 1,
+        symbolRepeat: true,
+        symbol: spirit2,
+        symbolSize: ["100%", "100%"]
+      }
+    ]
+  }]
 };
 export const rzOption = {
   color: ["#8A2BE2", "#FFD700"],
@@ -495,27 +505,24 @@ export const rzOption = {
     itemGap: 5,
     data: ["楼宇总面积(万㎡)", "闲置率(%)"]
   },
-  xAxis: [
-    {
-      data: ["南汇", "五马", "滨江", "大南", "松台", "广化", "南郊"],
-      silent: false,
-      splitLine: {
-        show: false
-      },
-      axisLine: {
-        lineStyle: {
-          color: "#fff"
-        }
-      },
-      axisTick: {
-        lineStyle: {
-          color: "#fff"
-        }
+  xAxis: [{
+    data: ["南汇", "五马", "滨江", "大南", "松台", "广化", "南郊"],
+    silent: false,
+    splitLine: {
+      show: false
+    },
+    axisLine: {
+      lineStyle: {
+        color: "#fff"
+      }
+    },
+    axisTick: {
+      lineStyle: {
+        color: "#fff"
       }
     }
-  ],
-  yAxis: [
-    {
+  }],
+  yAxis: [{
       type: "value",
       name: "楼宇总面积(万㎡)",
       position: "left",
@@ -551,8 +558,7 @@ export const rzOption = {
       }
     }
   ],
-  series: [
-    {
+  series: [{
       name: "楼宇总面积(万㎡)",
       type: "bar",
       data: [40.03, 9.96, 21.43, 40, 5.4, 9.44, 1.9],
@@ -563,8 +569,7 @@ export const rzOption = {
             0,
             0,
             1,
-            [
-              {
+            [{
                 offset: 0,
                 color: "rgba(27,211,249,1)" // 0% 处的颜色
               },
@@ -577,7 +582,7 @@ export const rzOption = {
           )
         }
       },
-      animationDelay: function(idx) {
+      animationDelay: function (idx) {
         return idx * 10;
       }
     },
@@ -596,7 +601,7 @@ export const rzOption = {
           }
         }
       },
-      animationDelay: function(idx) {
+      animationDelay: function (idx) {
         return idx * 10;
       }
     }

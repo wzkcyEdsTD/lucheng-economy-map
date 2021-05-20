@@ -136,7 +136,7 @@ export default {
               fun: "addBuild",
               check: true,
               img: true,
-              num: 34,
+              num: 68,
               imgName: "优质楼宇"
             },
             {

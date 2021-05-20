@@ -69,7 +69,7 @@ export default {
               fun: "addzsyp",
               check: true,
               img: true,
-              num: "10幢"
+              num: "9幢"
             },
             {
               name: "集聚一批",
@@ -77,7 +77,7 @@ export default {
               fun: "addjqyp",
               check: true,
               img: true,
-              num: "5幢"
+              num: "7幢"
             },
             {
               name: "培育一批",
@@ -85,7 +85,7 @@ export default {
               fun: "addpyyp",
               check: true,
               img: true,
-              num: "34幢"
+              num: "64幢"
             },
             {
               name: "亿元以上",
@@ -93,7 +93,7 @@ export default {
               fun: "addmillion",
               check: false,
               img: true,
-              num: "6幢",
+              num: "12幢",
               pad: 25
             },
             {
@@ -102,7 +102,7 @@ export default {
               fun: "addeight",
               check: false,
               img: true,
-              num: "8幢",
+              num: "5幢",
               pad: 25
             },
             {
@@ -111,7 +111,7 @@ export default {
               fun: "addfive",
               check: false,
               img: true,
-              num: "4幢",
+              num: "3幢",
               pad: 25
             },
             {
@@ -120,7 +120,7 @@ export default {
               fun: "addtwo",
               check: false,
               img: true,
-              num: "16幢",
+              num: "7幢",
               pad: 25
             }
           ]
