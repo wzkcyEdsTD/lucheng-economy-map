@@ -74,6 +74,7 @@
                 <li
                   v-for="(item,key,index) in aroundInfo"
                   :key="index"
+                  v-show="key != 'radius'"
                   @click="changeTypeAround(key)"
                 >
                   <span>

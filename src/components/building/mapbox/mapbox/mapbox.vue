@@ -719,11 +719,8 @@ export default {
             center: that.tempPoint,
             pitch: 60
           });
-
           that.closeAround();
-
           that.addAroundPic(geo);
-
           that.createPolygon(
             [geometry.extent.center.x, geometry.extent.center.y],
             radius
