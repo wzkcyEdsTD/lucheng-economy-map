@@ -1,6 +1,6 @@
 import echarts from "echarts";
 export const streetInfo = {
-  滨江街道 : {
+  滨江街道: {
     no: 1,
     val: 53.31,
     point: [120.709421614243, 28.0141811273661],
@@ -176,25 +176,25 @@ export const cp1Option = {
   }]
 };
 var colorArray = [{
-    top: "#ffa800", //黄
-    bottom: "rgba(11,42,84,.3)"
-  },
-  {
-    top: "#1ace4a", //绿
-    bottom: "rgba(11,42,84, 0.3)"
-  },
-  {
-    top: "#4bf3ff", //蓝
-    bottom: "rgba(11,42,84,.3)"
-  },
-  {
-    top: "#4f9aff", //深蓝
-    bottom: "rgba(11,42,84,.3)"
-  },
-  {
-    top: "#b250ff", //粉
-    bottom: "rgba(11,42,84,.3)"
-  }
+  top: "#ffa800", //黄
+  bottom: "rgba(11,42,84,.3)"
+},
+{
+  top: "#1ace4a", //绿
+  bottom: "rgba(11,42,84, 0.3)"
+},
+{
+  top: "#4bf3ff", //蓝
+  bottom: "rgba(11,42,84,.3)"
+},
+{
+  top: "#4f9aff", //深蓝
+  bottom: "rgba(11,42,84,.3)"
+},
+{
+  top: "#b250ff", //粉
+  bottom: "rgba(11,42,84,.3)"
+}
 ];
 
 //  亩均效益分析
@@ -277,53 +277,53 @@ export const mjssOption = {
           return {
             type: "linear",
             colorStops: [{
-                offset: 0,
-                color: colorArray[params.dataIndex % num].bottom
-              },
-              {
-                offset: 1,
-                color: colorArray[params.dataIndex % num].top
-              },
-              {
-                offset: 0,
-                color: colorArray[params.dataIndex % num].bottom
-              },
-              {
-                offset: 1,
-                color: colorArray[params.dataIndex % num].top
-              },
-              {
-                offset: 0,
-                color: colorArray[params.dataIndex % num].bottom
-              },
-              {
-                offset: 1,
-                color: colorArray[params.dataIndex % num].top
-              },
-              {
-                offset: 0,
-                color: colorArray[params.dataIndex % num].bottom
-              },
-              {
-                offset: 1,
-                color: colorArray[params.dataIndex % num].top
-              },
-              {
-                offset: 0,
-                color: colorArray[params.dataIndex % num].bottom
-              },
-              {
-                offset: 1,
-                color: colorArray[params.dataIndex % num].top
-              },
-              {
-                offset: 0,
-                color: colorArray[params.dataIndex % num].bottom
-              },
-              {
-                offset: 1,
-                color: colorArray[params.dataIndex % num].top
-              }
+              offset: 0,
+              color: colorArray[params.dataIndex % num].bottom
+            },
+            {
+              offset: 1,
+              color: colorArray[params.dataIndex % num].top
+            },
+            {
+              offset: 0,
+              color: colorArray[params.dataIndex % num].bottom
+            },
+            {
+              offset: 1,
+              color: colorArray[params.dataIndex % num].top
+            },
+            {
+              offset: 0,
+              color: colorArray[params.dataIndex % num].bottom
+            },
+            {
+              offset: 1,
+              color: colorArray[params.dataIndex % num].top
+            },
+            {
+              offset: 0,
+              color: colorArray[params.dataIndex % num].bottom
+            },
+            {
+              offset: 1,
+              color: colorArray[params.dataIndex % num].top
+            },
+            {
+              offset: 0,
+              color: colorArray[params.dataIndex % num].bottom
+            },
+            {
+              offset: 1,
+              color: colorArray[params.dataIndex % num].top
+            },
+            {
+              offset: 0,
+              color: colorArray[params.dataIndex % num].bottom
+            },
+            {
+              offset: 1,
+              color: colorArray[params.dataIndex % num].top
+            }
             ]
             //globalCoord: false
           };
@@ -407,32 +407,32 @@ export const hy1Option = {
     itemStyle: {
       normal: {
         color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
-            offset: 0,
-            color: "#06B5D7"
-          }, //柱图渐变色
-          {
-            offset: 0.5,
-            color: "#44C0C1"
-          }, //柱图渐变色
-          {
-            offset: 1,
-            color: "#71C8B1"
-          } //柱图渐变色
+          offset: 0,
+          color: "#06B5D7"
+        }, //柱图渐变色
+        {
+          offset: 0.5,
+          color: "#44C0C1"
+        }, //柱图渐变色
+        {
+          offset: 1,
+          color: "#71C8B1"
+        } //柱图渐变色
         ])
       },
       emphasis: {
         color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
-            offset: 0,
-            color: "#71C8B1"
-          }, //柱图高亮渐变色
-          {
-            offset: 0.7,
-            color: "#44C0C1"
-          }, //柱图高亮渐变色
-          {
-            offset: 1,
-            color: "#06B5D7"
-          } //柱图高亮渐变色
+          offset: 0,
+          color: "#71C8B1"
+        }, //柱图高亮渐变色
+        {
+          offset: 0.7,
+          color: "#44C0C1"
+        }, //柱图高亮渐变色
+        {
+          offset: 1,
+          color: "#06B5D7"
+        } //柱图高亮渐变色
         ])
       }
     }
@@ -485,101 +485,101 @@ export const jdOption = {
     show: false
   }],
   series: [{
-      type: "bar",
-      barGap: "-100%",
-      barWidth: "50%",
-      data: [100, 100, 100, 100, 100, 100, 100, 100, 100],
-      itemStyle: {
-        normal: {
-          color: "rgba(119,136,153,0.4)"
-        }
-      },
-      animation: false,
+    type: "bar",
+    barGap: "-100%",
+    barWidth: "50%",
+    data: [100, 100, 100, 100, 100, 100, 100, 100, 100],
+    itemStyle: {
+      normal: {
+        color: "rgba(119,136,153,0.4)"
+      }
     },
-    {
-      name: "A类",
-      type: "bar",
-      stack: "广告",
-      barWidth: "50%",
-      itemStyle: {
-        normal: {
-          label: {
-            show: true,
-            textStyle: {
-              color: "#fff"
-            },
-            position: "inside",
-            formatter: function (p) {
-              return p.value > 0 ? p.value : "";
-            }
+    animation: false,
+  },
+  {
+    name: "A类",
+    type: "bar",
+    stack: "广告",
+    barWidth: "50%",
+    itemStyle: {
+      normal: {
+        label: {
+          show: true,
+          textStyle: {
+            color: "#fff"
+          },
+          position: "inside",
+          formatter: function (p) {
+            return p.value > 0 ? p.value : "";
           }
         }
-      },
-      data: []
+      }
     },
-    {
-      name: "B类",
-      type: "bar",
-      stack: "广告",
-      barWidth: "50%",
-      itemStyle: {
-        normal: {
-          label: {
-            show: true,
-            textStyle: {
-              color: "#fff"
-            },
-            position: "inside",
-            formatter: function (p) {
-              return p.value > 0 ? p.value : "";
-            }
+    data: []
+  },
+  {
+    name: "B类",
+    type: "bar",
+    stack: "广告",
+    barWidth: "50%",
+    itemStyle: {
+      normal: {
+        label: {
+          show: true,
+          textStyle: {
+            color: "#fff"
+          },
+          position: "inside",
+          formatter: function (p) {
+            return p.value > 0 ? p.value : "";
           }
         }
-      },
-      data: []
+      }
     },
-    {
-      name: "C类",
-      type: "bar",
-      stack: "广告",
-      barWidth: "50%",
-      itemStyle: {
-        normal: {
-          label: {
-            show: true,
-            textStyle: {
-              color: "#fff"
-            },
-            position: "inside",
-            formatter: function (p) {
-              return p.value > 0 ? p.value : "";
-            }
+    data: []
+  },
+  {
+    name: "C类",
+    type: "bar",
+    stack: "广告",
+    barWidth: "50%",
+    itemStyle: {
+      normal: {
+        label: {
+          show: true,
+          textStyle: {
+            color: "#fff"
+          },
+          position: "inside",
+          formatter: function (p) {
+            return p.value > 0 ? p.value : "";
           }
         }
-      },
-      data: []
+      }
     },
-    {
-      name: "D类",
-      type: "bar",
-      stack: "广告",
-      barWidth: "50%",
-      itemStyle: {
-        normal: {
-          label: {
-            show: true,
-            textStyle: {
-              color: "#fff"
-            },
-            position: "inside",
-            formatter: function (p) {
-              return p.value > 0 ? p.value : "";
-            }
+    data: []
+  },
+  {
+    name: "D类",
+    type: "bar",
+    stack: "广告",
+    barWidth: "50%",
+    itemStyle: {
+      normal: {
+        label: {
+          show: true,
+          textStyle: {
+            color: "#fff"
+          },
+          position: "inside",
+          formatter: function (p) {
+            return p.value > 0 ? p.value : "";
           }
         }
-      },
-      data: []
-    }
+      }
+    },
+    data: []
+  }
   ]
 };
 
@@ -630,7 +630,7 @@ export const streetRank = {
     axisTick: {
       show: false
     },
-    data: ["滨江","南郊","丰门","山福","蒲鞋市","双屿","松台","仰义","藤桥","广化","七都"]
+    data: ["滨江", "南郊", "丰门", "山福", "蒲鞋市", "双屿", "松台", "仰义", "藤桥", "广化", "七都"]
   }],
   yAxis: [{
     name: "万元/亩",
@@ -663,16 +663,16 @@ export const streetRank = {
     itemStyle: {
       normal: {
         color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
-            offset: 0,
-            color: "#00CAE0"
-          },
-          {
-            offset: 1,
-            color: "#006EFB"
-          }
+          offset: 0,
+          color: "#00CAE0"
+        },
+        {
+          offset: 1,
+          color: "#006EFB"
+        }
         ])
       }
     },
-    data: [53.31,48.24,47.64,38.24,36.77,33.16,29.93,28.44,26.38,16.06,9.44]
+    data: [53.31, 48.24, 47.64, 38.24, 36.77, 33.16, 29.93, 28.44, 26.38, 16.06, 9.44]
   }]
 };

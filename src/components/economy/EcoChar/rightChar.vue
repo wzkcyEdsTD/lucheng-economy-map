@@ -22,7 +22,7 @@
               </span>
               <span class="rightCardWord">
                 <i class="i_gold">户籍人口数:</i>
-                <span class="text">{{forceChar.census || "-"}} 万人</span>
+                <span class="text">{{forceChar.census || "-"}} 人</span>
               </span>
               <span class="rightCardWord">
                 <i class="i_gold">户籍数:</i>

@@ -22,7 +22,7 @@ import {
   BUILDAROUND,
   LIGHTBAR_RFEATURE,
   JJTS,
-  LYZS
+  LYZS,
 } from "@/components/common/Tmap";
 const { server } = WRT_config;
 import { buildNames } from "../assets/buildNames.js";
@@ -48,7 +48,9 @@ const modelListArr = [
   "lugang",
   "songtai",
   "xincheng",
-  "zhixin"
+  "zhixin",
+  "bingrun1",
+  "bingrun2",
 ];
 const modelListObj = {
   5: ["shimao1", "shimao2"],
@@ -62,7 +64,8 @@ const modelListObj = {
   21: ["lugang"],
   13: ["songtai"],
   9: ["xincheng"],
-  11: ["zhixin"]
+  11: ["zhixin"],
+  // 57: ["bingrun1", "bingrun2"],
 };
 export default {
   name: "mapbox",
@@ -84,7 +87,7 @@ export default {
         "学校",
         "医院",
         "银行",
-        "娱乐健身"
+        "娱乐健身",
       ],
       modelList: [],
       yylBuilding,
@@ -95,7 +98,7 @@ export default {
       x: null,
       y: null,
       tempPoint: [],
-      lyItemid: null
+      lyItemid: null,
     };
   },
   components: { Frame },
@@ -106,20 +109,20 @@ export default {
     "lyItem",
     "fcClick",
     "commonSearch",
-    "searchbox_display"
+    "searchbox_display",
   ],
   watch: {
     isAside: {
       handler(newVal, val) {
         this.changeMap();
-      }
+      },
     },
     lyItem: {
       handler(newVal, Val) {
         this.lyItemid = newVal;
       },
-      immediate: true
-    }
+      immediate: true,
+    },
   },
 
   created() {},
@@ -147,10 +150,10 @@ export default {
               "raster-tiles": {
                 type: "raster",
                 tiles: [
-                  `${MAPBOXLAYER}/WMTS/tile/1.0.0/MyM/default/default028mm/{z}/{y}/{x}.png`
+                  `${MAPBOXLAYER}/WMTS/tile/1.0.0/MyM/default/default028mm/{z}/{y}/{x}.png`,
                 ],
-                tileSize: 256
-              }
+                tileSize: 256,
+              },
             },
             layers: [
               {
@@ -158,16 +161,16 @@ export default {
                 type: "raster",
                 source: "raster-tiles",
                 minzoom: 0,
-                maxzoom: 22
-              }
-            ]
+                maxzoom: 22,
+              },
+            ],
           },
           postEffect: {
             enable: true,
             FXAA: {
-              enable: true
-            }
-          }
+              enable: true,
+            },
+          },
         });
 
         that.map.on("style.load", () => {
@@ -176,7 +179,7 @@ export default {
           that.fetchBuild({
             name: "buildid",
             val: this.lyItemid,
-            url: JJTS + "/2"
+            url: JJTS + "/2",
           });
 
           // 分块顺序加载白模
@@ -211,9 +214,9 @@ export default {
               return that.createKGModel(2);
             });
 
-          that.map.on("click", e => {
+          that.map.on("click", (e) => {
             const features = that.map.queryRenderedFeatures(e.point, {
-              layers: ["swl_back"]
+              layers: ["swl_back"],
             });
 
             if (features.length) {
@@ -222,7 +225,7 @@ export default {
               that.fetchBuild({
                 name: "buildid",
                 val: features[0].properties.ID,
-                url: JJTS + "/2"
+                url: JJTS + "/2",
               });
             }
           });
@@ -238,27 +241,27 @@ export default {
       var promise = new Promise((resolve, reject) => {
         // that.modelList = [...modelListArr];
         const _modelList_ = [];
-        modelListArr.map(item => {
+        modelListArr.map((item) => {
           if (doAll) {
             if (!~that.modelList.indexOf(item)) {
               that.map.addLayer(
                 that.createModelLayer(item, [
                   120.66662090621764,
                   28.014045855663625,
-                  0
+                  0,
                 ])
               );
               _modelList_.push(item);
             }
           } else {
             value &&
-              value.map(v => {
+              value.map((v) => {
                 if (!~that.modelList.indexOf(v) && item == v) {
                   that.map.addLayer(
                     that.createModelLayer(item, [
                       120.66662090621764,
                       28.014045855663625,
-                      0
+                      0,
                     ])
                   );
                   _modelList_.push(item);
@@ -267,7 +270,7 @@ export default {
           }
         });
         that.modelList = that.modelList.concat(_modelList_);
-        that.modelList.map(item => {
+        that.modelList.map((item) => {
           that.map.setLayoutProperty(item, "visibility", "visible");
         });
         resolve();
@@ -285,13 +288,13 @@ export default {
           type: "fill-extrusion",
           source: {
             type: "geojson",
-            data: `${server}/mapbox/geojson/kgbm${mId}.geojson`
+            data: `${server}/mapbox/geojson/kgbm${mId}.geojson`,
           },
           paint: {
             "fill-extrusion-color": "rgba(162, 169, 183, 1)",
             "fill-extrusion-height": ["get", "e3"],
-            "fill-extrusion-opacity": 0.8
-          }
+            "fill-extrusion-opacity": 0.8,
+          },
         });
 
         resolve();
@@ -307,16 +310,16 @@ export default {
           type: "fill-extrusion",
           source: {
             type: "geojson",
-            data: `${server}/mapbox/geojson/kgbm${mId}.geojson`
+            data: `${server}/mapbox/geojson/kgbm${mId}.geojson`,
           },
           layout: {
-            visibility: "none"
+            visibility: "none",
           },
           paint: {
             "fill-extrusion-color": ["get", "color"],
             "fill-extrusion-height": ["get", "e3"],
-            "fill-extrusion-opacity": 0.6
-          }
+            "fill-extrusion-opacity": 0.6,
+          },
         });
         resolve();
       });
@@ -372,15 +375,15 @@ export default {
           type: "symbol",
           source: {
             type: "geojson",
-            data: `${server}/mapbox/geojson/buildNames.geojson`
+            data: `${server}/mapbox/geojson/buildNames.geojson`,
           },
           layout: {
             "icon-image": "name{固定id}",
             "icon-offset": [0, -20],
             "icon-anchor": "bottom",
             "icon-allow-overlap": true,
-            "icon-size": 0.9
-          }
+            "icon-size": 0.9,
+          },
         });
 
         resolve();
@@ -396,16 +399,16 @@ export default {
         type: "fill-extrusion",
         source: {
           type: "geojson",
-          data: `${server}/mapbox/geojson/swl.geojson`
+          data: `${server}/mapbox/geojson/swl.geojson`,
         },
         layout: {
-          visibility: "visible"
+          visibility: "visible",
         },
         paint: {
           "fill-extrusion-opacity": 1,
           "fill-extrusion-color": ["get", "color"],
-          "fill-extrusion-height": ["get", "e6"]
-        }
+          "fill-extrusion-height": ["get", "e6"],
+        },
       });
     },
 
@@ -418,16 +421,16 @@ export default {
           type: "fill-extrusion",
           source: {
             type: "geojson",
-            data: `${server}/mapbox/geojson/swl.geojson`
+            data: `${server}/mapbox/geojson/swl.geojson`,
           },
           layout: {
-            visibility: "visible"
+            visibility: "visible",
           },
           paint: {
             "fill-extrusion-opacity": 0,
             "fill-extrusion-color": ["get", "color"],
-            "fill-extrusion-height": ["get", "e6"]
-          }
+            "fill-extrusion-height": ["get", "e6"],
+          },
         });
         resolve();
       });
@@ -450,7 +453,7 @@ export default {
         rotateY: modelRotate[1],
         rotateZ: modelRotate[2],
 
-        scale: modelAsMercatorCoordinate.meterInMercatorCoordinateUnits()
+        scale: modelAsMercatorCoordinate.meterInMercatorCoordinateUnits(),
       };
 
       const THREE = window.THREE;
@@ -459,7 +462,7 @@ export default {
         id: mName,
         type: "custom",
         renderingMode: "3d",
-        onAdd: function(map, gl) {
+        onAdd: function (map, gl) {
           this.camera = new THREE.Camera();
           this.scene = new THREE.Scene();
 
@@ -483,7 +486,7 @@ export default {
 
           loader.load(
             `${server}/mapbox/models/${mName}.gltf`,
-            function(gltf) {
+            function (gltf) {
               this.scene.add(gltf.scene);
             }.bind(this)
           );
@@ -493,12 +496,12 @@ export default {
           this.renderer = new THREE.WebGLRenderer({
             canvas: map.getCanvas(),
             context: gl,
-            antialias: true
+            antialias: true,
           });
 
           this.renderer.autoClear = false;
         },
-        render: function(gl, matrix) {
+        render: function (gl, matrix) {
           var rotationX = new THREE.Matrix4().makeRotationAxis(
             new THREE.Vector3(1, 0, 0),
             modelTransform.rotateX
@@ -534,7 +537,7 @@ export default {
           this.renderer.state.reset();
           this.renderer.render(this.scene, this.camera);
           this.map.triggerRepaint();
-        }
+        },
       };
     },
 
@@ -549,8 +552,8 @@ export default {
         source: "around",
         paint: {
           "fill-extrusion-color": "rgb(255, 0, 0)",
-          "fill-extrusion-opacity": 0.3
-        }
+          "fill-extrusion-opacity": 0.3,
+        },
       });
     },
 
@@ -560,7 +563,7 @@ export default {
 
       var coords = {
         latitude: center[1],
-        longitude: center[0]
+        longitude: center[0],
       };
 
       var km = radius / 1000;
@@ -589,11 +592,11 @@ export default {
               type: "Feature",
               geometry: {
                 type: "Polygon",
-                coordinates: [ret]
-              }
-            }
-          ]
-        }
+                coordinates: [ret],
+              },
+            },
+          ],
+        },
       };
     },
 
@@ -606,7 +609,7 @@ export default {
           type: "symbol",
           source: {
             type: "geojson",
-            data: geoData
+            data: geoData,
           },
           layout: {
             "icon-image": "type{TYPE}",
@@ -615,14 +618,14 @@ export default {
             "icon-size": 0.7,
             "icon-allow-overlap": true,
             "text-field": "{NAME}",
-            "text-offset": [0, -4]
+            "text-offset": [0, -4],
           },
           paint: {
             "text-opacity": 1,
             "text-color": "#FFFFFF",
             "text-halo-color": "rgba(0, 0, 0, 1)",
-            "text-halo-width": 2
-          }
+            "text-halo-width": 2,
+          },
         });
 
         resolve();
@@ -652,20 +655,20 @@ export default {
         OPTION
       ).then(([QueryTask, Query]) => {
         const queryTask = new QueryTask({
-          url: `${BUILDAROUND}/${radius == 300 ? 16 : radius == 500 ? 17 : 18}`
+          url: `${BUILDAROUND}/${radius == 300 ? 16 : radius == 500 ? 17 : 18}`,
         });
         const query = new Query();
         query.outFields = ["*"];
         query.where = `buildid=${that.buildid}`;
         query.returnGeometry = true;
-        queryTask.execute(query).then(response => {
+        queryTask.execute(query).then((response) => {
           // 结果不为空，则叠加企业面
           if (response.features.length) {
             const geometry = response.features[0].geometry;
             geometry.rings = [
-              response.features[0].geometry.rings[0].map(item => {
+              response.features[0].geometry.rings[0].map((item) => {
                 return [...item, 10];
-              })
+              }),
             ];
 
             that.fetchAreaPoint(
@@ -695,7 +698,7 @@ export default {
         hospital: 11,
         school: 12,
         gas: 13,
-        park: 14
+        park: 14,
       };
       const that = this;
       loadModules(
@@ -703,7 +706,7 @@ export default {
         OPTION
       ).then(([QueryTask, Query]) => {
         const queryTask = new QueryTask({
-          url: `${BUILDAROUND}/${typeHash[type] || 0}`
+          url: `${BUILDAROUND}/${typeHash[type] || 0}`,
         });
         const query = new Query();
         query.outFields = ["*"];
@@ -712,12 +715,12 @@ export default {
         query.geometry = geometry;
         // 查询参数为点
         query.returnGeometry = true;
-        queryTask.execute(query).then(response => {
+        queryTask.execute(query).then((response) => {
           const geo = that.convertToGeo(response.features);
           that.map.flyTo({
             zoom: 16,
             center: that.tempPoint,
-            pitch: 60
+            pitch: 60,
           });
           that.closeAround();
           that.addAroundPic(geo);
@@ -733,18 +736,18 @@ export default {
     convertToGeo(data) {
       let list = { type: "FeatureCollection", features: [] };
 
-      data.map(item => {
+      data.map((item) => {
         list.features.push({
           type: "Feature",
           geometry: {
             type: "Point",
-            coordinates: [item.geometry.x, item.geometry.y]
+            coordinates: [item.geometry.x, item.geometry.y],
           },
           properties: {
             OBJECTID: item.attributes.OBJECTID,
             NAME: item.attributes.NAME,
-            TYPE: item.attributes.TYPE
-          }
+            TYPE: item.attributes.TYPE,
+          },
         });
       });
 
@@ -761,7 +764,7 @@ export default {
       that.buildid = val;
       indexApi.lcxx({ where: `gdid='${that.buildid}'` }).then(({ data }) => {
         if (!data.length) return;
-        data.map(item => {
+        data.map((item) => {
           if (item.status == "0") {
             //入驻企业数
             arr[0]++;
@@ -772,12 +775,12 @@ export default {
           //总面积
           arr[1] += item.jzmj ? parseFloat(item.jzmj) : 0;
         });
-        lyhx = data.map(item => {
+        lyhx = data.map((item) => {
           return {
             ...item,
             _mj: arr[1],
             _rzqy: arr[0],
-            _rzl: arr[1] && arr[2] ? arr[2] / arr[1] : ""
+            _rzl: arr[2] ? arr[2] / arr[1] : 0,
           };
         });
         that.$parent.forceBuilding = lyhx[0];
@@ -803,13 +806,13 @@ export default {
         OPTION
       ).then(([QueryTask, Query]) => {
         const queryTask = new QueryTask({
-          url: LYZS + "/5"
+          url: LYZS + "/5",
         });
         const query = new Query();
         query.outFields = ["*"];
         query.where = `gdid='${that.buildid}'`;
         query.returnGeometry = true;
-        queryTask.execute(query).then(response => {
+        queryTask.execute(query).then((response) => {
           if (response.features.length) {
             const { x, y } = response.features[0].geometry;
             const point = [x, y + 0.0025];
@@ -817,7 +820,7 @@ export default {
               center: point,
               zoom: 16.5,
               pitch: 60,
-              bearing: 0
+              bearing: 0,
             });
             that.tempPoint = point;
             that.x = x;
@@ -846,7 +849,7 @@ export default {
       );
       if (that.isAside == "闲置分析") {
         if (that.modelList.length) {
-          that.modelList.map(item => {
+          that.modelList.map((item) => {
             that.map.setLayoutProperty(item, "visibility", "none");
           });
         }
@@ -889,7 +892,7 @@ export default {
           15,
           16,
           20,
-          21
+          21,
         ]);
         that.addModelLayers(that.isAside == "三维沙盘", that.buildid);
       }
@@ -907,20 +910,20 @@ export default {
           qynbApi
             .pjzb({
               where: `uuid='${uuid.replace(/\ /g, "")}'`,
-              count: 10
+              count: 10,
             })
             .then(({ data }) => {
               resultApi.push(data[0] || {});
               qynbApi
                 .ds({
                   where: `a.uuid='${uuid.replace(/\ /g, "")}'`,
-                  count: 10
+                  count: 10,
                 })
                 .then(({ data }) => {
                   resultApi.push(data);
                   qynbApi
                     .ydxx({
-                      uuid: uuid.replace(/\ /g, "")
+                      uuid: uuid.replace(/\ /g, ""),
                     })
                     .then(({ data }) => {
                       resultApi.push(data);
@@ -951,11 +954,11 @@ export default {
         this.map.flyTo({
           zoom: 16.5,
           center: center,
-          pitch: 60
+          pitch: 60,
         });
       }
-    }
-  }
+    },
+  },
 };
 </script>
 

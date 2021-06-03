@@ -334,7 +334,7 @@ export default {
             value1: newVal._rzqy || "-",
             title2: "入驻率",
             value2:
-              (newVal._rzl ? ((1 - newVal._rzl) * 100).toFixed(2) : "-") + " %"
+              ((1 - newVal._rzl) * 100).toFixed(2) + " %"
           }
         ];
         this.fetchLcxx();

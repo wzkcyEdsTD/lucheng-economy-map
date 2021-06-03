@@ -53,7 +53,7 @@ export default {
               fun: "addghyp",
               check: true,
               img: true,
-              num: "6幢"
+              num: "5幢"
             },
             {
               name: "建设一批",
@@ -61,7 +61,7 @@ export default {
               fun: "addysyp",
               check: true,
               img: true,
-              num: "5幢"
+              num: "8幢"
             },
             {
               name: "招商一批",
@@ -85,7 +85,7 @@ export default {
               fun: "addpyyp",
               check: true,
               img: true,
-              num: "64幢"
+              num: "58幢"
             },
             {
               name: "亿元以上",

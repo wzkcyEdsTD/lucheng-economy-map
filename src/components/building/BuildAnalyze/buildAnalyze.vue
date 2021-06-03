@@ -304,7 +304,8 @@ export default {
           this.glList = [
             {
               title: "商务楼宇",
-              value: `${arr[0]} <i ${style}>幢</i>`,
+              // value: `${arr[0]} <i ${style}>幢</i>`,
+              value: `58 <i ${style}>幢</i>`,
               img: `${server}/icon/buildingImg/lyfx/商务楼宇.png`,
             },
             {
@@ -325,7 +326,7 @@ export default {
             {
               title: "税收总额",
               // value: `${arr[4] || `-`} <i ${style}>万元</i>`,
-              value: `18.4 <i ${style}>亿元</i>`,
+              value: `20.6 <i ${style}>亿元</i>`,
               img: `${server}/icon/buildingImg/lyfx/税收总额.png`,
             },
             {
