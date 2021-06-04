@@ -3,17 +3,30 @@
     <header>
       <ul>
         <li
-          v-for="(item, key, index) in lists "
+          v-for="(item, key, index) in lists"
           :key="index"
-          @click="selectT(item.value,item.title)"
-          :class="{active:activeName==item.value,li_tab_active:activeName==item.value}"
-        >{{item.title}}</li>
+          @click="selectT(item.value, item.title)"
+          :class="{
+            active: activeName == item.value,
+            li_tab_active: activeName == item.value,
+          }"
+        >
+          {{ item.title }}
+        </li>
       </ul>
     </header>
     <div class="page_container">
-      <transition enter-class="fade-in-enter" enter-active-class="fade-in-active">
+      <transition
+        enter-class="fade-in-enter"
+        enter-active-class="fade-in-active"
+      >
         <!-- <keep-alive include="buildpic"> -->
-        <components :is="activeName" :item="item" :search="search" ref="StyleTool"></components>
+        <components
+          :is="activeName"
+          :item="item"
+          :search="search"
+          ref="StyleTool"
+        ></components>
         <!-- </keep-alive> -->
       </transition>
     </div>
@@ -32,10 +45,11 @@ export default {
       lists: [
         { value: "buildingLayer", title: "楼宇总述" },
         { value: "buildPic", title: "楼宇画像" },
-        { value: "buildAnalyze", title: "楼宇分析" }
+        { value: "buildAnalyze", title: "楼宇分析" },
+        { value: "buildEco", title: "楼宇经济" },
       ],
       item: {},
-      search: {}
+      search: {},
     };
   },
   components: { buildingLayer, buildPic, buildAnalyze },
@@ -53,9 +67,13 @@ export default {
   methods: {
     //高亮标签
     selectT(value, title) {
-      this.activeName = value;
-    }
-  }
+      if (value == "buildEco") {
+        window.open("http://172.20.70.104:1888/czyWeb");
+      } else {
+        this.activeName = value;
+      }
+    },
+  },
 };
 </script>
 <style scoped lang="less"></style>
