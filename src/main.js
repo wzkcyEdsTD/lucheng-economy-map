@@ -5,7 +5,7 @@
  * @LastEditors: eds
  * @Description: 
  * @FilePath: \lucheng-economy-map\src\main.js
- */ 
+ */
 import Vue from "vue";
 import App from "./App.vue";
 import util from "./components/common/util.js";
@@ -24,7 +24,7 @@ Vue.prototype.$window = window;
 Vue.prototype.$hub = new Vue(); //  全局事件线程
 
 //路由跳转
-Vue.prototype.$goRoute = function(index) {
+Vue.prototype.$goRoute = function (index) {
   this.$router.push({ name: index, params: { Jump: false } });
 };
 
@@ -47,11 +47,12 @@ tokenCatch();
  * outside  游客
  */
 const app = async fn => {
-  if (location.host.includes("localhost")) {
-    await auth_token("kcadmin");
-  } else if (location.host.includes("lysb.lucheng.gov.cn")) {
-    await auth_token("游客");
-  } else {
+  if (window.shallLogin) {
+    if (window.env == 'outside') {
+      await auth_token("游客");
+    } else {
+      await auth_token("kcadmin");
+    }
   }
   const [{ au_username, group, style, au_userid }] = await auth_token_info();
   window.user = {
@@ -62,16 +63,16 @@ const app = async fn => {
     rquota: false,
     style:
       location.host.includes("lysb.lucheng.gov.cn") ||
-      location.host.includes("localhost")
+        location.host.includes("localhost")
         ? util.getStorage("@style") || [
-            {
-              chooseStyle: "app",
-              id: 1,
-              mapStyle: "simpleStyle",
-              userDepart: "亩均论英雄",
-              userName: "admin"
-            }
-          ]
+          {
+            chooseStyle: "app",
+            id: 1,
+            mapStyle: "simpleStyle",
+            userDepart: "亩均论英雄",
+            userName: "admin"
+          }
+        ]
         : style
   };
   fn && fn();

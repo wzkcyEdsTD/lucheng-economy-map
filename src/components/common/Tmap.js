@@ -4,18 +4,21 @@
  * update by eds 2019/8/20
  */
 import Vue from "vue";
+import util from "./util";
 /**
  * 环境配置获取
  * [dev]      本地  自动登录admin
  * [prod]     生产  需token严重
  * [outside]  对外  自动登录游客
+ * [frame]    对外  免登录政务办
  */
+const { authorCode } = util.fetchQuerys();
 window.env =
-  location.host.includes("localhost") || location.host.includes("192.168.0.200")
+  authorCode ? "frame" : location.host.includes("localhost") || location.host.includes("192.168.0.200")
     ? "prod"
     : location.host.includes("lysb.lucheng.gov.cn")
-    ? "outside"
-    : "prod";
+      ? "outside"
+      : "prod";
 Vue.prototype.$env = window.env;
 /**
  * 是否需要登录
@@ -24,7 +27,7 @@ Vue.prototype.$env = window.env;
  */
 window.shallLogin =
   location.host.includes("localhost") ||
-  location.host.includes("lysb.lucheng.gov.cn");
+  location.host.includes("lysb.lucheng.gov.cn") || authorCode;
 //  此console不删
 console.log(`[env]${window.env}`, `[shallLogin]${window.shallLogin}`);
 
@@ -64,12 +67,24 @@ const CONFIG_OUTSIDE = {
   API_HOST: "https://lysb.lucheng.gov.cn",
   LOGIN_HOST: " https://lysb.lucheng.gov.cn"
 };
+//  嵌入环境配置
+const CONFIG_FRAME = {
+  ARCGIS_API_URL:
+    "https://sz-mhmap.lucheng.gov.cn/server/JJDT/lc/libs/arcgis_js_frame/arcgis_js_api/library/4.12/dojo/dojo.js",
+  LOCAL_DOMAIN: "https://server.lcmap.com",
+  LOCAL_HOST: "https://sz-mhmap.lucheng.gov.cn/server/rest/services/JJDT/",
+  FORWARD_HOST: "https://sz-mhmap.lucheng.gov.cn/server/rest/services/JJDT/",
+  OTHER_HOST: "https://services.wzmap.gov.cn/server/rest/services",
+  SERVER_HOST: "https://sz-mhmap.lucheng.gov.cn/server/JJDT/s/lc",
+  API_HOST: "https://sz-mhmap.lucheng.gov.cn/server/JJDT",
+  LOGIN_HOST: "http://lysb.lucheng.gov.cn"
+};
 const TO_CONFIG =
   Vue.prototype.$env == "dev"
     ? CONFIG_DEV
     : Vue.prototype.$env == "outside"
-    ? CONFIG_OUTSIDE
-    : CONFIG_PROVIDE;
+      ? CONFIG_OUTSIDE
+      : Vue.prototype.$env == "frame" ? CONFIG_FRAME : CONFIG_PROVIDE;
 //  环境变量 配置信息获取
 const {
   ARCGIS_API_URL,
@@ -141,18 +156,17 @@ export const LVYOU = `${FORWARD_HOST}/lcjjdt/lvyou/MapServer`;
 //     ? `${OTHER_HOST}/Hosted/DSJ/VectorTileServer`
 //     : `${LOCAL_HOST}/Hosted/kfq_WGS84/VectorTileServer`;
 export const IMAGELAYER =
-  window.env == "outside"
+  window.env == "outside" || window.env == "frame"
     ? `${OTHER_HOST}/Hosted/JYB/VectorTileServer`
     : `${LOCAL_HOST}/Hosted/TDT_SLDT/VectorTileServer`;
 export const IMAGELAYERDSJ =
-  window.env == "outside"
+  window.env == "outside" || window.env == "frame"
     ? `${OTHER_HOST}/Hosted/DSJ/VectorTileServer`
     : `${LOCAL_HOST}/Hosted/kfq_WGS84/VectorTileServer`;
 
 // mapbox底图
-export const MAPBOXLAYER = `${FORWARD_HOST}/${
-  window.env == "dev" ? `DT1022` : `lcjjdt/LCDT1115`
-}/MapServer`;
+export const MAPBOXLAYER = `${FORWARD_HOST}/${window.env == "dev" ? `DT1022` : `lcjjdt/LCDT1115`
+  }/MapServer`;
 //  三维-白模房屋面
 export const BUILD_POLYGON = `${FORWARD_HOST}/lcjjdt/fwm1021/MapServer`;
 //  三维-亿元楼
@@ -183,7 +197,7 @@ export const TDTSL =
   "http://srv.zjditu.cn/ZJEMAP_2D/wmts?SERVICE=WMTS&REQUEST=GetTile&VERSION=1.0.0&LAYER=3dmap&STYLE=default&TILEMATRIXSET=custom_3dmap&TILEMATRIX={level}&TILEROW={row}&TILECOL={col}&FORMAT=image%2Fpng";
 //  天地图-招商-影像图2017
 export const TDTIMAGE2019 = `${OTHER_HOST}/TDT/YX_2019/MapServer`;
-  //  天地图-招商-影像图2018
+//  天地图-招商-影像图2018
 export const TDTIMAGE2018 = `http://srv.zjditu.cn/ZJDOM_2D/wmts?SERVICE=WMTS&REQUEST=GetTile&VERSION=1.0.0&LAYER=3dmap&STYLE=default&TILEMATRIXSET=custom_3dmap&TILEMATRIX={level}&TILEROW={row}&TILECOL={col}&FORMAT=image%2Fpng`;
 //  天地图-招商-影像图2017
 export const TDTIMAGE2017 = `${OTHER_HOST}/TDT/YX2017/MapServer`;

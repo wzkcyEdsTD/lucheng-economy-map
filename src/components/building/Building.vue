@@ -46,7 +46,7 @@ export default {
         { value: "buildingLayer", title: "楼宇总述" },
         { value: "buildPic", title: "楼宇画像" },
         { value: "buildAnalyze", title: "楼宇分析" },
-        { value: "buildEco", title: "楼宇经济" },
+        { value: "buildEco", title: "楼宇税收" },
       ],
       item: {},
       search: {},
